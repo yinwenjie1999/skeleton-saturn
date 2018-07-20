@@ -1,0 +1,49 @@
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+group = 'com.vanda.platform'
+archivesBaseName = 'saturn'
+version = 0.9
+
+buildscript {
+  repositories {
+  	mavenLocal()
+    maven { url 'http://repo.spring.io/plugins-release/'}
+    mavenCentral();
+  }
+}
+
+repositories {
+  mavenLocal()
+  maven { url 'http://repo.spring.io/plugins-release/'}
+  mavenCentral()
+}
+
+dependencies {
+  compile gradleApi()
+  compile 'org.gradle:gradle-core:4.2'
+  compile 'org.gradle:gradle-tooling-api:4.2'
+  compile 'org.slf4j:slf4j-api:1.7.25'
+  compile 'org.apache.commons:commons-lang3:3.6'
+  compile 'junit:junit:4.12'
+  compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.13.102'
+  compile 'com.github.wumpz:diffutils:2.2'
+}
+
+//设置jdk的版本
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+// 打包配置
+uploadArchives {
+  repositories.mavenDeployer {
+    repository(url: 'file:C:/Users/Administrator/.m2/repository/')
+    // 构造项目的Pom文件
+    pom.project {
+      name = project.name
+      packaging = 'jar'
+      description = '21323231'	
+    }
+  }
+}

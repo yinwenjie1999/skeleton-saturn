@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="20131001" xmlns:xmi="http://www.omg.org/spec/XMI/20131001" xmlns:uml="http://www.eclipse.org/uml2/5.0.0/UML" xmi:id="_hqTWAFwNEei0ue7LfEuolg" name="NewModel">
+  <packagedElement xmi:type="uml:Component" xmi:id="_02930FwQEei0ue7LfEuolg" name="实体层结构扫描和存储模块&#xD;&#xA;com.vanda.platform.saturn.core.model"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_1kEOYFwQEei0ue7LfEuolg" name="上下文控制器&#xD;&#xA;com.vanda.platform.saturn.core.context">
+    <nestedClassifier xmi:type="uml:Component" xmi:id="_Wld9cFz7EeiQcfecFeQd6A" name="事件监听模块&#xD;&#xA;com.vanda.platform.saturn.core.context.event"/>
+    <nestedClassifier xmi:type="uml:Component" xmi:id="_dw9gMHRnEeieN9sNL8eSww" name="扫描结构操作存储模块&#xD;&#xA;com.vanda.platform.saturn.core.context.repository">
+      <packagedElement xmi:type="uml:Component" xmi:id="_8D7loHT6EeieN9sNL8eSww" name="扫描结构操作存储模块(简单内存实现)&#xD;&#xA;com.vanda.platform.saturn.core.context.repository.simple"/>
+      <packagedElement xmi:type="uml:Component" xmi:id="__mtv4HT6EeieN9sNL8eSww" name="扫描结构操作存储模块(H2实现)&#xD;&#xA;com.vanda.platform.saturn.core.context.repository,h2"/>
+    </nestedClassifier>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_KtdqAFwREei0ue7LfEuolg" client="_1kEOYFwQEei0ue7LfEuolg" supplier="_02930FwQEei0ue7LfEuolg"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_eGF2IFwSEei0ue7LfEuolg" name="包生成模块">
+    <packagedElement xmi:type="uml:Component" xmi:id="_yTMBkFwSEei0ue7LfEuolg" name="数据层生成模块"/>
+    <packagedElement xmi:type="uml:Component" xmi:id="_7AODIFwSEei0ue7LfEuolg" name="服务层生成模块"/>
+    <packagedElement xmi:type="uml:Component" xmi:id="_g8EIQFwTEei0ue7LfEuolg" name="restful层生成模块"/>
+    <packagedElement xmi:type="uml:Component" xmi:id="_ucsw0FwVEei0ue7LfEuolg" name="X组件生成模块"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_wd1CcFwSEei0ue7LfEuolg" client="_eGF2IFwSEei0ue7LfEuolg" supplier="_1kEOYFwQEei0ue7LfEuolg"/>
+  <packagedElement xmi:type="uml:Component" xmi:id="_TbHqwFweEeibF9Wgs_IPWg" name="脚本生成规则DSL模块&#xD;&#xA;com.vanda.platform.saturn.core.dsl"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_Y9RrwFweEeibF9Wgs_IPWg" client="_TbHqwFweEeibF9Wgs_IPWg" supplier="_1kEOYFwQEei0ue7LfEuolg"/>
+  <packagedElement xmi:type="uml:Interaction" xmi:id="_1rnnwGJ6EeiDSerBeV3bSQ" name="NewModel">
+    <ownedAttribute xmi:id="_5O_A0GJ6EeiDSerBeV3bSQ" name="Class1"/>
+    <ownedAttribute xmi:id="_8WFUoGJ6EeiDSerBeV3bSQ" name="Class2" type="_8WEGgGJ6EeiDSerBeV3bSQ"/>
+    <lifeline xmi:id="_5O_A0WJ6EeiDSerBeV3bSQ" name="Class1" represents="_5O_A0GJ6EeiDSerBeV3bSQ"/>
+    <lifeline xmi:id="_8WEtkGJ6EeiDSerBeV3bSQ" name="Class2" represents="_8WFUoGJ6EeiDSerBeV3bSQ"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Activity" xmi:id="_bBJ60GJ7EeiDSerBeV3bSQ" name="NewModel"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_SUIxgHL8EeieN9sNL8eSww" client="_JHOygHL7EeieN9sNL8eSww"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_TAVwMHL8EeieN9sNL8eSww" client="_JHOygHL7EeieN9sNL8eSww" supplier="_UkAX0HL7EeieN9sNL8eSww"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_X3d3MHL8EeieN9sNL8eSww" client="_JHOygHL7EeieN9sNL8eSww" supplier="_8WEGgGJ6EeiDSerBeV3bSQ"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_aB_1EHL8EeieN9sNL8eSww" client="_JHOygHL7EeieN9sNL8eSww" supplier="_4XH14HL7EeieN9sNL8eSww"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_aaVckHL8EeieN9sNL8eSww" client="_JHOygHL7EeieN9sNL8eSww" supplier="_CV5MIHL8EeieN9sNL8eSww"/>
+  <packagedElement xmi:type="uml:Dependency" xmi:id="_rKzJEHL8EeieN9sNL8eSww" client="_8WEGgGJ6EeiDSerBeV3bSQ" supplier="_UkAX0HL7EeieN9sNL8eSww"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_quEwQHT-EeieN9sNL8eSww" name="com.vanda.platform.saturn.core.context">
+    <packagedElement xmi:type="uml:Package" xmi:id="_9u-1YHT-EeieN9sNL8eSww" name="com.vanda.platform.saturn.core.context.repository">
+      <packagedElement xmi:type="uml:Package" xmi:id="_IMrjUHT_EeieN9sNL8eSww" name="com.vanda.platform.saturn.core.context.repository.h2">
+        <packagedElement xmi:type="uml:Class" xmi:id="_59g9oHT4EeieN9sNL8eSww" name="H2QueryMethodRepository">
+          <generalization xmi:id="_7FWvcHT4EeieN9sNL8eSww" general="_2ouMEHT4EeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_deVAMHT4EeieN9sNL8eSww" name="H2IndependentUpdateMethodRepository">
+          <generalization xmi:id="_lRTNQHT4EeieN9sNL8eSww" general="_absVoHT4EeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_jbMAMHT4EeieN9sNL8eSww" name="H2PersistentClassRepository">
+          <generalization xmi:id="_kg_KoHT4EeieN9sNL8eSww" general="_gs08gHT4EeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Ru-fkHRoEeieN9sNL8eSww" name="H2DomainRepository">
+          <generalization xmi:id="_lAETUHT4EeieN9sNL8eSww" general="_UEEusHRoEeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_A3XbQHUCEeieN9sNL8eSww" name="H2RepositoryBuilder">
+          <generalization xmi:id="_JVOYYHUCEeieN9sNL8eSww" general="_ngoR8HUAEeieN9sNL8eSww"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Package" xmi:id="_Ou4sEHT_EeieN9sNL8eSww" name="com.vanda.platform.saturn.core.context.repository.simple">
+        <packagedElement xmi:type="uml:Class" xmi:id="_lATi4HUDEeieN9sNL8eSww" name="SimpleRepositoryBuilder">
+          <generalization xmi:id="_1WtesHUFEeieN9sNL8eSww" general="_ngoR8HUAEeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_gu2UwHUDEeieN9sNL8eSww" name="SimplePersistentClassRepository">
+          <generalization xmi:id="_55wzIHUFEeieN9sNL8eSww" general="_UEEusHRoEeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_d_qKoHUDEeieN9sNL8eSww" name="SimpleIndependentUpdateMethodRepository">
+          <generalization xmi:id="_BHOfYHUGEeieN9sNL8eSww" general="_2ouMEHT4EeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_iRo9MHUDEeieN9sNL8eSww" name="SimpleQueryMethodRepository">
+          <generalization xmi:id="_chhGwHUFEeieN9sNL8eSww" general="_absVoHT4EeieN9sNL8eSww"/>
+        </packagedElement>
+        <packagedElement xmi:type="uml:Class" xmi:id="_Z3fbYHUDEeieN9sNL8eSww" name="SimpleDomainRepository">
+          <generalization xmi:id="_hUH6IHUFEeieN9sNL8eSww" general="_gs08gHT4EeieN9sNL8eSww"/>
+        </packagedElement>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_absVoHT4EeieN9sNL8eSww" name="IndependentUpdateMethodRepository"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_gs08gHT4EeieN9sNL8eSww" name="PersistentClassRepository"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_UEEusHRoEeieN9sNL8eSww" name="DomainRepository"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_2ouMEHT4EeieN9sNL8eSww" name="QueryMethodRepository"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_ngoR8HUAEeieN9sNL8eSww" name="RepositoryBuilder">
+        <generalization xmi:id="_hrtbEHUCEeieN9sNL8eSww"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_h0oZUHjuEeigNozO2eMt2A" name="SimpleSaturnContext">
+      <generalization xmi:id="_zzZsAHjuEeigNozO2eMt2A" general="_tuaDsHjuEeigNozO2eMt2A"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_tuaDsHjuEeigNozO2eMt2A" name="SaturnContext" isAbstract="true"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_3_YCsHd5EeigNozO2eMt2A" name="com.vanda.platform.saturn.core.engine">
+    <packagedElement xmi:type="uml:Package" xmi:id="_JbvCUHduEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.engine.handler">
+      <packagedElement xmi:type="uml:Class" xmi:id="_N552wHduEeigNozO2eMt2A" name="ControllerGenerateHandler" isAbstract="true">
+        <generalization xmi:id="_ACBrgHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_PXLGAHduEeigNozO2eMt2A" name="SaturnProjectHandler"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_VuZt0HduEeigNozO2eMt2A" name="EntityGenerateHandler" isAbstract="true">
+        <generalization xmi:id="_BkiAEHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_ZcAoAHduEeigNozO2eMt2A" name="RepositoryGenerateHandler" isAbstract="true">
+        <generalization xmi:id="_CfsAwHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_gBHTwHduEeigNozO2eMt2A" name="ServiceGenerateHandler" isAbstract="true">
+        <generalization xmi:id="_DIFdgHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_xfpnMHduEeigNozO2eMt2A" name="SimpleControllerGenerateHandler">
+        <generalization xmi:id="_6crMkHduEeigNozO2eMt2A" general="_N552wHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_2LnnEHduEeigNozO2eMt2A" name="HibernateRepositoryGenerateHandler">
+        <generalization xmi:id="_9s7cYHduEeigNozO2eMt2A" general="_ZcAoAHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_4u2_4HduEeigNozO2eMt2A" name="SimpleServiceGenerateHandler">
+        <generalization xmi:id="_-cWuMHduEeigNozO2eMt2A" general="_gBHTwHduEeigNozO2eMt2A"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="_KM_vwHjlEeigNozO2eMt2A" name="IbatisRepositoryGenerateHandler">
+        <generalization xmi:id="_QTB54HjlEeigNozO2eMt2A" general="_ZcAoAHduEeigNozO2eMt2A"/>
+      </packagedElement>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_o0-lsHjlEeigNozO2eMt2A" name="SaturnEngine"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_vTBAIHjlEeigNozO2eMt2A" name="SaturnEngine.Builder"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_4QuiAHjlEeigNozO2eMt2A" client="_vTBAIHjlEeigNozO2eMt2A" supplier="_o0-lsHjlEeigNozO2eMt2A"/>
+    <packagedElement xmi:type="uml:Package" xmi:id="_kNUBkHjmEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.engine.annotation">
+      <packagedElement xmi:type="uml:Class" xmi:id="_0uhxIHjmEeigNozO2eMt2A" name="BuildCustomRepository"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_5Ti0cHjmEeigNozO2eMt2A" name="BuildIndependentUpdateMethods"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_9u-d8HjmEeigNozO2eMt2A" name="IndependentUpdateMethod"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_-11_YHjmEeigNozO2eMt2A" client="_5Ti0cHjmEeigNozO2eMt2A" supplier="_9u-d8HjmEeigNozO2eMt2A"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_HuieYHjnEeigNozO2eMt2A" name="BuildQueryMethods"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_LXbQoHjnEeigNozO2eMt2A" name="QueryMethod"/>
+      <packagedElement xmi:type="uml:Dependency" xmi:id="_MG17YHjnEeigNozO2eMt2A" client="_HuieYHjnEeigNozO2eMt2A" supplier="_LXbQoHjnEeigNozO2eMt2A"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_UP5tMHjnEeigNozO2eMt2A" name="SaturnColumn"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_X-oowHjnEeigNozO2eMt2A" name="SaturnEntity"/>
+      <packagedElement xmi:type="uml:Class" xmi:id="_bPpGgHjnEeigNozO2eMt2A" name="Validate"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_iFH7IHjoEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.model">
+    <packagedElement xmi:type="uml:Class" xmi:id="_JHOygHL7EeieN9sNL8eSww" name="PersistentClass"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_4XH14HL7EeieN9sNL8eSww" name="QueryMethod"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_CV5MIHL8EeieN9sNL8eSww" name="IndependentUpdateMethod"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_UkAX0HL7EeieN9sNL8eSww" name="PersistentProperty"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_8WEGgGJ6EeiDSerBeV3bSQ" name="PersistentRelation"/>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Component" xmi:id="_l0eIMHI5EeieN9sNL8eSww" name="实体结构扫描结果(基于cglib工作)&#xD;&#xA;com.vanda.platform.saturn.core.scan"/>
+  <packagedElement xmi:type="uml:Package" xmi:id="_Me0roHjpEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.scan">
+    <packagedElement xmi:type="uml:Interface" xmi:id="_xwiF8HMHEeieN9sNL8eSww" name="PersistentScanner"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_4qb9AHMHEeieN9sNL8eSww" name="SimplePersistentScanner">
+      <generalization xmi:id="_-e4A0HMHEeieN9sNL8eSww" general="_xwiF8HMHEeieN9sNL8eSww"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_diQAkIl1EeiCpKAMxVgzeQ" name="TagAnalysis"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_ggGRwIl1EeiCpKAMxVgzeQ" name="JpaTagAnalysis">
+      <generalization xmi:id="_xOT7gIl1EeiCpKAMxVgzeQ" general="_diQAkIl1EeiCpKAMxVgzeQ"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_j2LcwIl1EeiCpKAMxVgzeQ" name="OwnerTagAnalysis">
+      <generalization xmi:id="_waJ6sIl1EeiCpKAMxVgzeQ" general="_diQAkIl1EeiCpKAMxVgzeQ"/>
+    </packagedElement>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Package" xmi:id="_j65-wHjtEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.dsl"/>
+</uml:Model>
