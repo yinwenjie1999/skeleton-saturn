@@ -3,7 +3,7 @@ package com.vanda.platform.saturn.core.context.repository.simple;
 import java.util.List;
 
 import com.vanda.platform.saturn.core.context.repository.IndependentUpdateMethodRepository;
-import com.vanda.platform.saturn.core.model.IndependentUpdateMethod;
+import com.vanda.platform.saturn.core.model.PersistentUpdateMethod;
 
 /**
  * TODO 未写注释
@@ -15,7 +15,7 @@ public class SimpleIndependentUpdateMethodRepository implements IndependentUpdat
    * @see com.vanda.platform.saturn.core.context.repository.IndependentUpdateMethodRepository#queryByClassName(java.lang.String)
    */
   @Override
-  public List<IndependentUpdateMethod> queryByClassName(String className) {
+  public List<PersistentUpdateMethod> queryByClassName(String className) {
     // TODO Auto-generated method stub
     return null;
   }

@@ -2,7 +2,7 @@ package com.vanda.platform.saturn.core.context.repository;
 
 import java.util.List;
 
-import com.vanda.platform.saturn.core.model.IndependentUpdateMethod;
+import com.vanda.platform.saturn.core.model.PersistentUpdateMethod;
 
 /**
  * 和IndependentUpdateMethod对象相关的数据层操作在这里进行。
@@ -14,5 +14,5 @@ public interface IndependentUpdateMethodRepository {
    * @param className 完整的类全名信息
    * @return
    */
-  public List<IndependentUpdateMethod> queryByClassName(String className);
+  public List<PersistentUpdateMethod> queryByClassName(String className);
 }

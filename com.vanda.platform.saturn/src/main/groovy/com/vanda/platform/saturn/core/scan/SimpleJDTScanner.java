@@ -28,12 +28,12 @@ import com.vanda.platform.saturn.core.utils.JdtUtils;
  * 这是一个持久层扫描定义的默认实现，是骨架V3.0版本自带的持久层扫描逻辑
  * @author yinwenjie
  */
-public class SimplePersistentScanner implements PersistentScanner {
+public class SimpleJDTScanner implements JDTScanner {
   
   /**
    * 日志
    */
-  private static final Logger LOGGER = LoggerFactory.getLogger(SimplePersistentScanner.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SimpleJDTScanner.class);
   
   /* (non-Javadoc)
    * @see com.vanda.platform.saturn.core.engine.handler.SaturnProjectHandler#handle(com.vanda.platform.saturn.core.context.SaturnContext)
@@ -110,10 +110,10 @@ public class SimplePersistentScanner implements PersistentScanner {
     /*
      * 对于单个java文件的扫描主要遵循以下处理原则和处理过程
      * 1、将当前java文件带入JDT工具，得到当前的JDT解析对象AST（抽象语义树），如果抛出异常则不再解析
-     * 2、由于骨架支持自定义标签和原生JPA标签（以前者优先），所以只有java主类上有@javax.persistence.Entity注解或者
+     * 2、由于骨架支持自定义标签和原生JPA标签（以后者优先），所以只有java主类上有@javax.persistence.Entity注解或者
      * @com.vanda.platform.saturn.core.engine.annotation.SaturnEntity注解，那么才会继续解析这个类
-     * 3、由于有两套标签库的支持，所以解析过程也分为两套，且以自有标签为优先，所以根据第二步得到的关键注释，
-     * 再决定是使用JpaTagAnalysis进行分析，还是使用OwnerTagAnalysis进行分析（这里的解耦设计待后续版本再进行优化）
+     * 3、由于有两套标签库的支持，所以解析过程也分为两套，且以JPA标签为优先，所以根据第二步得到的关键注释，
+     * 再决定是使用JpaTagAnalysis进行分析，还是使用OwnerTagAnalysis进行分析（TODO 这里的解耦设计待后续版本再进行优化）
      * 4、得到的PersistentClass对象将会被构建后返回
      * */
     ASTParser astParserTool = JdtUtils.get();
@@ -161,15 +161,15 @@ public class SimplePersistentScanner implements PersistentScanner {
     // TODO 异常信息需要重新定义
     // 验证当前类规格和注解规格
     int validateResult = this.validateClassType(currentAnnotations, currentModifiers, imports);
-    TagAnalysis tagAnalysis;
+    JDTAnalysis tagAnalysis;
     switch (validateResult) {
       case 0:
         return null;
       case 1: 
-        tagAnalysis = new JpaTagAnalysis();
+        tagAnalysis = new JpaTagJDTAnalysis();
         break;
       case 2: 
-        tagAnalysis = new OwnerTagAnalysis();
+        tagAnalysis = new OwnerTagJDTAnalysis();
         break;
       default:
         return null;

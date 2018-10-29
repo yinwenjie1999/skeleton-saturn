@@ -133,17 +133,30 @@
   </packagedElement>
   <packagedElement xmi:type="uml:Component" xmi:id="_l0eIMHI5EeieN9sNL8eSww" name="实体结构扫描结果(基于cglib工作)&#xD;&#xA;com.vanda.platform.saturn.core.scan"/>
   <packagedElement xmi:type="uml:Package" xmi:id="_Me0roHjpEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.scan">
-    <packagedElement xmi:type="uml:Interface" xmi:id="_xwiF8HMHEeieN9sNL8eSww" name="PersistentScanner"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_4qb9AHMHEeieN9sNL8eSww" name="SimplePersistentScanner">
+    <packagedElement xmi:type="uml:Interface" xmi:id="_xwiF8HMHEeieN9sNL8eSww" name="JDTScanner"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_4qb9AHMHEeieN9sNL8eSww" name="SimpleJDTScanner">
       <generalization xmi:id="_-e4A0HMHEeieN9sNL8eSww" general="_xwiF8HMHEeieN9sNL8eSww"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Interface" xmi:id="_diQAkIl1EeiCpKAMxVgzeQ" name="TagAnalysis"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_ggGRwIl1EeiCpKAMxVgzeQ" name="JpaTagAnalysis">
+    <packagedElement xmi:type="uml:Interface" xmi:id="_diQAkIl1EeiCpKAMxVgzeQ" name="JDTAnalysis"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_ggGRwIl1EeiCpKAMxVgzeQ" name="JpaTagJDTAnalysis">
       <generalization xmi:id="_xOT7gIl1EeiCpKAMxVgzeQ" general="_diQAkIl1EeiCpKAMxVgzeQ"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_j2LcwIl1EeiCpKAMxVgzeQ" name="OwnerTagAnalysis">
+    <packagedElement xmi:type="uml:Class" xmi:id="_j2LcwIl1EeiCpKAMxVgzeQ" name="OwnerTagJDTAnalysis">
       <generalization xmi:id="_waJ6sIl1EeiCpKAMxVgzeQ" general="_diQAkIl1EeiCpKAMxVgzeQ"/>
     </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_RGZwANf6EeiV8Y81LeBjvg" name="ClassScanner"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_fzZv8Nf6EeiV8Y81LeBjvg" name="SimpleClassScanner">
+      <generalization xmi:id="_tNNCoNf6EeiV8Y81LeBjvg" general="_RGZwANf6EeiV8Y81LeBjvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_jxk1sNf6EeiV8Y81LeBjvg" name="ClassAnalysis"/>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_qjdZMNf6EeiV8Y81LeBjvg" client="_4qb9AHMHEeieN9sNL8eSww" supplier="_diQAkIl1EeiCpKAMxVgzeQ"/>
+    <packagedElement xmi:type="uml:Class" xmi:id="_1PQ0kNf6EeiV8Y81LeBjvg" name="JpaTagClassAnalysis">
+      <generalization xmi:id="_PO9QwNf7EeiV8Y81LeBjvg" general="_jxk1sNf6EeiV8Y81LeBjvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Class" xmi:id="_7qcIQNf6EeiV8Y81LeBjvg" name="OwnerTagClassAnalysis">
+      <generalization xmi:id="_QE9EoNf7EeiV8Y81LeBjvg" general="_jxk1sNf6EeiV8Y81LeBjvg"/>
+    </packagedElement>
+    <packagedElement xmi:type="uml:Dependency" xmi:id="_UX12INf7EeiV8Y81LeBjvg" client="_fzZv8Nf6EeiV8Y81LeBjvg" supplier="_jxk1sNf6EeiV8Y81LeBjvg"/>
   </packagedElement>
   <packagedElement xmi:type="uml:Package" xmi:id="_j65-wHjtEeigNozO2eMt2A" name="com.vanda.platform.saturn.core.dsl"/>
 </uml:Model>

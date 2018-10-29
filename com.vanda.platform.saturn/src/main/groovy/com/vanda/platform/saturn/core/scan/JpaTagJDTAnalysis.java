@@ -13,7 +13,7 @@ import com.vanda.platform.saturn.core.model.PersistentClass;
  * TODO 注释未写
  * @author yinwenjie
  */
-public class JpaTagAnalysis implements TagAnalysis {
+public class JpaTagJDTAnalysis implements JDTAnalysis {
   @Override
   public PersistentClass analyze(TypeDeclaration publicTypeDecl , List<Annotation> currentAnnotations , List<ImportDeclaration> imports) {
     /*

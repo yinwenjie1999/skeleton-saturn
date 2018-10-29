@@ -12,7 +12,7 @@ import com.vanda.platform.saturn.core.model.PersistentClass;
  * JDT分析接口，目前已知的分析套件包括了JPA系列标签和自有系列标签
  * @author yinwenjie
  */
-public interface TagAnalysis {
+public interface JDTAnalysis {
   /**
    * 进行语义分析，得到实体定义模型的结构化表达
    * @param publicTypeDecl 

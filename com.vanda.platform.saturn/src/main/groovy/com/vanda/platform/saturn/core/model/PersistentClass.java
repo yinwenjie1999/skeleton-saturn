@@ -21,9 +21,15 @@ public class PersistentClass {
    */
   private String className;
   /**
-   * 域名称
+   * 不包括报名的类型。
+   * 注意，骨架的这个版本不支持内部类的定义
    */
-  private String name;
+  private String simpleClassName;
+  /**
+   * 该标记表示这个对象定义是否是基于JPA的持久层对象<br>
+   * 如果是持久层对象才会生成相关的持久层代码，否则就不会生成
+   */
+  private Boolean repositoryEntity = false;
   /**
    * 该持久化描述类是否需要激活自定义持久层类（基于JPA）
    */
@@ -39,12 +45,18 @@ public class PersistentClass {
   /**
    * 由程序员在持久层对象中自定义的查询方法
    */
-  private List<QueryMethod> queryMethods;
+  private List<PersistentQueryMethod> queryMethods;
   /**
-   * 有程序员在持久层对象中自定义的和业务相关的属性更新方法
+   * 由程序员在持久层对象中自定义的和业务相关的属性更新方法
    */
-  private List<IndependentUpdateMethod> independentUpdateMethods;
+  private List<PersistentUpdateMethod> updateMethods;
   
+  public Boolean getRepositoryEntity() {
+    return repositoryEntity;
+  }
+  public void setRepositoryEntity(Boolean repositoryEntity) {
+    this.repositoryEntity = repositoryEntity;
+  }
   public String getPkage() {
     return pkage;
   }
@@ -78,26 +90,25 @@ public class PersistentClass {
     this.buildCustomRepository = buildCustomRepository;
   }
 
-  public List<QueryMethod> getQueryMethods() {
+  public List<PersistentQueryMethod> getQueryMethods() {
     return queryMethods;
   }
 
-  public void setQueryMethods(List<QueryMethod> queryMethods) {
+  public void setQueryMethods(List<PersistentQueryMethod> queryMethods) {
     this.queryMethods = queryMethods;
   }
-
-  public List<IndependentUpdateMethod> getIndependentUpdateMethods() {
-    return independentUpdateMethods;
+  
+  public List<PersistentUpdateMethod> getUpdateMethods() {
+    return updateMethods;
   }
-
-  public void setIndependentUpdateMethods(List<IndependentUpdateMethod> independentUpdateMethods) {
-    this.independentUpdateMethods = independentUpdateMethods;
+  public void setUpdateMethods(List<PersistentUpdateMethod> updateMethods) {
+    this.updateMethods = updateMethods;
   }
-  public String getName() {
-    return name;
+  public String getSimpleClassName() {
+    return simpleClassName;
   }
-  public void setName(String name) {
-    this.name = name;
+  public void setSimpleClassName(String simpleClassName) {
+    this.simpleClassName = simpleClassName;
   }
   public String getDomain() {
     return domain;

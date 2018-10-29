@@ -9,7 +9,7 @@ import com.vanda.platform.saturn.core.model.PersistentClass;
  * 持久层扫描接口，该接口定义了骨架生成工具对指定工程持久层的扫描操作
  * @author yinwenjie
  */
-public interface PersistentScanner extends SaturnHandler {
+public interface JDTScanner extends SaturnHandler {
   /**
    * 该方法定义了骨架生成工具对目标持久层对象的扫描操作
    * @param rootHomePath 根工程的完整工程路径,例如根工程的完整路径为：/usr/local/rootproject；那么这里的工程home project为：/usr/local/

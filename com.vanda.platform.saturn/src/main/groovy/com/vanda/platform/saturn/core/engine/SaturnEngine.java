@@ -10,7 +10,7 @@ import com.vanda.platform.saturn.core.engine.handler.SaturnHandlerEventListener;
 
 /**
  * 骨架V3.0（土星）执行驱动，该类就是外层调用者最近本的使用类<br>
- * 所有骨架执行前的初始化过程、规则属性设置过程，都在这里进行；工程的生成/重新生成命令也是由类调用和发出
+ * 所有骨架执行前的初始化过程、规则属性设置过程，都在这里进行；工程的生成/重新生成命令也是由类调用和触发
  * @author yinwenjie
  */
 public final class SaturnEngine {

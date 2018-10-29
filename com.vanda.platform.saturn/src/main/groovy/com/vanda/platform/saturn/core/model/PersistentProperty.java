@@ -1,6 +1,6 @@
 package com.vanda.platform.saturn.core.model;
 
-import com.vanda.platform.saturn.core.engine.annotation.Validate;
+import com.vanda.platform.saturn.core.engine.annotation.SaturnValidate;
 
 /**
  * 持久化属性
@@ -25,9 +25,13 @@ public class PersistentProperty {
    */
   private String propertyDbName;
   /**
-   * 属性类型（完整类型），无论属性是否是基础类型
+   * 属性类型（完整类型），无论属性是否是java中的类型
    */
-  private Class<?> propertyClass; 
+  private String propertyClass; 
+  /**
+   * 该属性在持久化类中是否可以进行基础插入
+   */
+  private Boolean canInsert = true;
   /**
    * 该属性在持久化类中是否可以进行基础更新
    */
@@ -48,7 +52,7 @@ public class PersistentProperty {
   /**
    * 该字段如果设定了验证信息，则验证信息在这里被记录
    */
-  private Validate.ValidateType validateType = null;
+  private SaturnValidate.ValidateType validateType = null;
   
   public Integer getIndex() {
     return index;
@@ -74,10 +78,10 @@ public class PersistentProperty {
   public void setPropertyDbName(String propertyDbName) {
     this.propertyDbName = propertyDbName;
   }
-  public Class<?> getPropertyClass() {
+  public String getPropertyClass() {
     return propertyClass;
   }
-  public void setPropertyClass(Class<?> propertyClass) {
+  public void setPropertyClass(String propertyClass) {
     this.propertyClass = propertyClass;
   }
   public Boolean getCanUpdate() {
@@ -104,10 +108,16 @@ public class PersistentProperty {
   public void setPrimaryKey(Boolean primaryKey) {
     this.primaryKey = primaryKey;
   }
-  public Validate.ValidateType getValidateType() {
+  public SaturnValidate.ValidateType getValidateType() {
     return validateType;
   }
-  public void setValidateType(Validate.ValidateType validateType) {
+  public void setValidateType(SaturnValidate.ValidateType validateType) {
     this.validateType = validateType;
+  }
+  public Boolean getCanInsert() {
+    return canInsert;
+  }
+  public void setCanInsert(Boolean canInsert) {
+    this.canInsert = canInsert;
   }
 }

@@ -15,13 +15,14 @@ import java.lang.annotation.Target;
 @Target({FIELD})
 public @interface SaturnColumn {
   /**
-   * 字段名字（只能是英文）
-   */
-  String name();
-  /**
    * 字段中文意义
    */
   String description();
+  /**
+   * 该字段是否是数据表的主键信息<br>
+   * 目前骨架版本不支持符合主键（如果扫描到符合主键就会直接报错）
+   */
+  boolean pkColumn() default false;
   /**
    * 该字段是否可以为null
    */

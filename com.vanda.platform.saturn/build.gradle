@@ -1,6 +1,7 @@
 apply plugin: 'java'
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
 
 group = 'com.vanda.platform'
 archivesBaseName = 'saturn'
@@ -11,6 +12,9 @@ buildscript {
   	mavenLocal()
     maven { url 'http://repo.spring.io/plugins-release/'}
     mavenCentral();
+  }
+  dependencies{
+    classpath 'org.springframework.boot:spring-boot-gradle-plugin:1.4.5.RELEASE'
   }
 }
 
@@ -29,6 +33,9 @@ dependencies {
   compile 'junit:junit:4.12'
   compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.13.102'
   compile 'com.github.wumpz:diffutils:2.2'
+  compile 'org.javassist:javassist:3.23.1-GA'
+  testCompile 'org.springframework.boot:spring-boot-starter-data-jpa'
+  testCompile 'com.vanda.platform.im21:pojo:2.1-SNAPSHOT'
 }
 
 //设置jdk的版本

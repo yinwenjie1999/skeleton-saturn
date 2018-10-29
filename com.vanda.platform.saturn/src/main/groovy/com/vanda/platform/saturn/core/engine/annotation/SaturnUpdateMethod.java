@@ -17,11 +17,20 @@ import java.lang.annotation.Target;
  */
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface IndependentUpdateMethod {
+public @interface SaturnUpdateMethod {
   /**
-   * 指定的属性名，这些属性名一定要存在于当前的类定义中，否则在saturn进行扫描的时候，就会报错
+   * 指定的属性名（条件），这些属性名一定要存在于当前的类定义中，否则在saturn进行扫描的时候，就会报错<br>
+   * 查询属性很关键，它（们）指明了需要更新的数据范围
    */
-  String[] params();
+  String[] queryParams();
+  
+  /**
+   * 指定的更新属性名（写操作），这些属性名一定要存在于当前的类定义中，否则在saturn进行扫描的时候，就会报错<br>
+   * 更新属性很关键，它（们）指明了需要更新的最终值
+   * @return
+   */
+  String[] updateParams();
+  
   /**
    * 该方法的业务性质注释说明
    */

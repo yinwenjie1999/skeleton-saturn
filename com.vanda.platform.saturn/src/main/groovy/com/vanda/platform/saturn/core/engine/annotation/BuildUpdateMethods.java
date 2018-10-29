@@ -13,9 +13,9 @@ import java.lang.annotation.Target;
  */
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface BuildIndependentUpdateMethods {
+public @interface BuildUpdateMethods {
   /**
    * 指定的方法信息
    */
-  IndependentUpdateMethod[] method();
+  SaturnUpdateMethod[] methods();
 }

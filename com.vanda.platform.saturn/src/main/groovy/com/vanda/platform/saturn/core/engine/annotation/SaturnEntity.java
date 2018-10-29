@@ -14,6 +14,12 @@ import java.lang.annotation.Target;
 @Target(TYPE)
 public @interface SaturnEntity {
   /**
+   * 可能设定的实体所属域信息，在代码生成阶段，不同的域接口以及实现类会存放在不同的包中
+   * @return
+   */
+  String domain() default "";
+  
+  /**
    * 实体定义类的名字，一般来说就是类名（只能是英文）
    */
   String name();

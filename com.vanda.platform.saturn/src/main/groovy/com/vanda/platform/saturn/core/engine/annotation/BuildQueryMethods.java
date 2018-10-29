@@ -17,5 +17,5 @@ public @interface BuildQueryMethods {
   /**
    * 指定的方法描述信息
    */
-  QueryMethod[] method();
+  SaturnQueryMethod[] methods();
 }
