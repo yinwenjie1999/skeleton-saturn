@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import com.vanda.platform.saturn.core.context.SaturnContext;
-import com.vanda.platform.saturn.core.context.repository.RepositoryBuilder;
+import com.vanda.platform.saturn.core.context.repository.AbstractRepositoryFactory;
 import com.vanda.platform.saturn.core.engine.handler.SaturnHandler;
 import com.vanda.platform.saturn.core.engine.handler.SaturnHandlerEventListener;
 
@@ -45,7 +45,7 @@ public final class SaturnEngine {
     /**
      * TODO 注释未写
      */
-    private RepositoryBuilder repositoryBuilder;
+    private AbstractRepositoryFactory repositoryBuilder;
     
     /**
      * TODO 注释未写
@@ -78,7 +78,7 @@ public final class SaturnEngine {
      * 而Saturn（土星）提供了多种存储扫描后结构的方式；默认的一种是直接存储在内存中的简单结构。
      * @param repositoryBuilder 存储层构建接口
      */
-    public Builder setRepositoryBuilder(RepositoryBuilder repositoryBuilder) {
+    public Builder setRepositoryBuilder(AbstractRepositoryFactory repositoryBuilder) {
       /*
        * TODO 代码未写
        * */

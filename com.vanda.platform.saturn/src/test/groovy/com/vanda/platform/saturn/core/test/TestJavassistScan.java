@@ -85,9 +85,11 @@ public class TestJavassistScan {
     String rootPackagePath = StringUtils.replaceAll(rootPackage, "\\.", "/");
     
     /*
-     * 过程为：
+     * 需要遍历两次，过程为：
      * 1、基于当前rootPackage，获得当前所有的url信息，这是第一级遍历的基础
-     * 2、
+     * 第一次遍历主要是为了分析符合要求的模型定义中的普通字段、关联字段
+     * 2、在模型定义中的普通字段和关联字段都清楚了的情况下，才对模型定义中都可方法（包括更新方法、查询方法）
+     * 进行分析
      * */
     ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
     Enumeration<URL> urls = null;
@@ -161,7 +163,7 @@ public class TestJavassistScan {
         LOGGER.error(e.getLocalizedMessage());
         continue;
       }
-      PersistentClass persistentClass = analysisClassForFields(null , null , currentCtClass , false);
+      PersistentClass persistentClass = analysisClassForFields(currentCtClass ,null , null ,  false);
       if(persistentClass != null) {
         this.persistentClassMapping.put(classFullName, persistentClass);
       }
@@ -202,7 +204,7 @@ public class TestJavassistScan {
           LOGGER.error(e.getLocalizedMessage());
           continue;
         }
-        PersistentClass persistentClass = analysisClassForFields(null , null , currentCtClass , false);
+        PersistentClass persistentClass = analysisClassForFields(currentCtClass ,null , null ,  false);
         if(persistentClass != null) {
           this.persistentClassMapping.put(className, persistentClass);
         }
@@ -217,7 +219,7 @@ public class TestJavassistScan {
    * @param currentCtClass 
    * @param isChildPersistent 标记当前类的子类是否已经确定是一个PersistentClass，如果是说明本次递归即使父级类没有
    */
-  private PersistentClass analysisClassForFields(List<PersistentProperty> properties , List<PersistentRelation> relations , CtClass currentCtClass , boolean isChildPersistent) {
+  private PersistentClass analysisClassForFields(CtClass currentCtClass , List<PersistentProperty> properties , List<PersistentRelation> relations , boolean isChildPersistent) {
     /*
      * 分析一个满足模型定义的类和其所有父级类中的字段定义信息，该方法支持递归性的字段搜索
      * 操作过程如下：
@@ -261,7 +263,7 @@ public class TestJavassistScan {
     }
     // 如果存在父类，则递归进行属性检测
     if(superClass != null) {
-      analysisClassForFields(properties , relations , superClass, true);
+      analysisClassForFields(superClass, properties , relations , true);
     }
     
     // 3、=========================
@@ -331,7 +333,6 @@ public class TestJavassistScan {
       prsistentClass.setRelations(relations);
     }
     
-    // 最终返回
     return prsistentClass;
   }
   
@@ -547,10 +548,10 @@ public class TestJavassistScan {
     }
     
     // 如果存在JoinColumn，则首先根据其中属性设置属性特性
-    PersistentProperty property = new PersistentProperty();
-    property.setPropertyClass(fieldTypeName);
-    property.setPropertyName(fieldName);
-    property.setIndex(fieldIndex);
+    PersistentRelation relation = new PersistentRelation();
+    relation.setPropertyClass(fieldTypeName);
+    relation.setPropertyName(fieldName);
+    relation.setIndex(fieldIndex);
     if(hasJoinColumnAnnotation) {
       JoinColumn columnAnnotation;
       try {
@@ -560,15 +561,13 @@ public class TestJavassistScan {
         return null;
       }
       boolean insertable = columnAnnotation.insertable();
-      property.setCanInsert(insertable);
+      relation.setCanInsert(insertable);
       boolean canUpdate = columnAnnotation.updatable();
-      property.setCanUpdate(canUpdate);
+      relation.setCanUpdate(canUpdate);
       boolean nullable = columnAnnotation.nullable();
-      property.setNullable(nullable);
+      relation.setNullable(nullable);
       String propertyDbName = columnAnnotation.name();
-      property.setPropertyDbName(propertyDbName);
-      boolean unique = columnAnnotation.unique();
-      property.setUnique(unique);
+      relation.setPropertyDbName(propertyDbName);
     }
     
     // 如果条件成立说明有SaturnColumn，这里面的属性有优先权
@@ -583,22 +582,16 @@ public class TestJavassistScan {
         return null;
       }
       boolean insertable = saturnColumnAnnotation.insertable();
-      property.setCanInsert(insertable);
+      relation.setCanInsert(insertable);
       boolean nullable = saturnColumnAnnotation.nullable();
-      property.setNullable(nullable);
-      boolean pkColumn = saturnColumnAnnotation.pkColumn();
-      property.setPrimaryKey(pkColumn);
-      boolean unique = saturnColumnAnnotation.unique();
-      property.setUnique(unique);
+      relation.setNullable(nullable);
       boolean updatable = saturnColumnAnnotation.updatable();
-      property.setCanUpdate(updatable);
+      relation.setCanUpdate(updatable);
       String description = saturnColumnAnnotation.description();
-      property.setPropertyDesc(description);
+      relation.setPropertyDesc(description);
     }
     
     // 建立关联
-    PersistentRelation relation = new PersistentRelation();
-    relation.setProperty(property);
     if(hasManyToOneAnnotation) {
       relation.setRelationType(RelationType.ManyToOne);
     } else if(hasManyToManyAnnotation) {
@@ -895,12 +888,10 @@ public class TestJavassistScan {
     } else {
       PersistentRelation persistentRelation = persistentRelationMapping.get(currentParamItem);
       Validate.notNull(persistentRelation , "没有找到模型结构中的指定属性!!");
-      persistentProperty = persistentRelation.getProperty();
-      Validate.notNull(persistentProperty , "没有找到模型结构中的指定属性(一旦出现这个错误，可能是之前第一次模型扫描出现了bug，请联系程序员)!!");
       
       // 如果条件成立，说明可以且应该向深度进行遍历
       if(itemIndex + 1 < paramArrayItems.length) {
-        String propertyClass = persistentProperty.getPropertyClass();
+        String propertyClass = persistentRelation.getPropertyClass();
         PersistentClass nextPersistentClass = this.persistentClassMapping.get(propertyClass);
         Validate.notNull(nextPersistentClass , "没有找到指定的模型结构(一旦出现这个错误，可能是之前第一次模型扫描出现了bug，请联系程序员)!!");
         currentPersistentProperty = foundRelationParms(nextPersistentClass, paramArrayItems, itemIndex + 1);

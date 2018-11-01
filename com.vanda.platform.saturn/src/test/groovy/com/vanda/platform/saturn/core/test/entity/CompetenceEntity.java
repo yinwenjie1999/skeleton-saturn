@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 import com.vanda.platform.saturn.core.engine.annotation.SaturnColumn;
 /**
  * 功能信息，用于将权限控制到功能（按钮、连接）级别
@@ -28,7 +26,6 @@ public class CompetenceEntity extends UuidEntity {
   private static final long serialVersionUID = -7742962048681654604L;
   
   /** 状态 1正常, 0禁用（枚举）. **/
-  @Type(type = "useStatus")
   @Column(name = "useStatus", nullable = false)
   @SaturnColumn(description="功能状态" , insertable=true , nullable=false , updatable=false)
   private Integer status = 1;

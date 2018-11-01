@@ -1,9 +1,10 @@
 package com.vanda.platform.saturn.core.context;
 
-import com.vanda.platform.saturn.core.context.repository.DomainRepository;
-import com.vanda.platform.saturn.core.context.repository.IndependentUpdateMethodRepository;
-import com.vanda.platform.saturn.core.context.repository.PersistentClassRepository;
-import com.vanda.platform.saturn.core.context.repository.QueryMethodRepository;
+import com.vanda.platform.saturn.core.context.service.PersistentClassService;
+import com.vanda.platform.saturn.core.context.service.PersistentPropertyService;
+import com.vanda.platform.saturn.core.context.service.PersistentQueryMethodService;
+import com.vanda.platform.saturn.core.context.service.PersistentRelationService;
+import com.vanda.platform.saturn.core.context.service.PersistentUpdateMethodService;
 
 /**
  * 骨架V3.0（土星）上下文对象，是整个组建中最重要的对象，在工程持久层、数据层、服务层、用户接口层的生成过程中起到承上启下的作用。<br>
@@ -15,19 +16,23 @@ public abstract class SaturnContext {
   /**
    * TODO 注释未写
    */
-  protected DomainRepository domainRepository;
+  protected PersistentClassService persistentClassService;
   /**
    * TODO 注释未写
    */
-  protected IndependentUpdateMethodRepository independentUpdateMethodRepository;
+  protected PersistentPropertyService persistentPropertyService;
   /**
    * TODO 注释未写
    */
-  protected PersistentClassRepository persistentClassRepository;
+  protected PersistentQueryMethodService persistentQueryMethodService;
   /**
    * TODO 注释未写
    */
-  protected QueryMethodRepository queryMethodRepository;
+  protected PersistentRelationService persistentRelationService;
+  /**
+   * TODO 注释未写
+   */
+  protected PersistentUpdateMethodService persistentUpdateMethodService;
   /**
    * 根工程的完整工程路径
    * 例如根工程的完整路径为：/usr/local/rootproject；那么这里的工程home project为：/usr/local/
@@ -46,30 +51,37 @@ public abstract class SaturnContext {
    */
   private String[] projectNames;
   
-  public DomainRepository getDomainRepository() {
-    return domainRepository;
+  public PersistentClassService getPersistentClassService() {
+    return persistentClassService;
   }
-  public void setDomainRepository(DomainRepository domainRepository) {
-    this.domainRepository = domainRepository;
+  public void setPersistentClassService(PersistentClassService persistentClassService) {
+    this.persistentClassService = persistentClassService;
   }
-  public IndependentUpdateMethodRepository getIndependentUpdateMethodRepository() {
-    return independentUpdateMethodRepository;
+  public PersistentPropertyService getPersistentPropertyService() {
+    return persistentPropertyService;
   }
-  public void setIndependentUpdateMethodRepository(
-      IndependentUpdateMethodRepository independentUpdateMethodRepository) {
-    this.independentUpdateMethodRepository = independentUpdateMethodRepository;
+  public void setPersistentPropertyService(PersistentPropertyService persistentPropertyService) {
+    this.persistentPropertyService = persistentPropertyService;
   }
-  public PersistentClassRepository getPersistentClassRepository() {
-    return persistentClassRepository;
+  public PersistentQueryMethodService getPersistentQueryMethodService() {
+    return persistentQueryMethodService;
   }
-  public void setPersistentClassRepository(PersistentClassRepository persistentClassRepository) {
-    this.persistentClassRepository = persistentClassRepository;
+  public void setPersistentQueryMethodService(
+      PersistentQueryMethodService persistentQueryMethodService) {
+    this.persistentQueryMethodService = persistentQueryMethodService;
   }
-  public QueryMethodRepository getQueryMethodRepository() {
-    return queryMethodRepository;
+  public PersistentRelationService getPersistentRelationService() {
+    return persistentRelationService;
   }
-  public void setQueryMethodRepository(QueryMethodRepository queryMethodRepository) {
-    this.queryMethodRepository = queryMethodRepository;
+  public void setPersistentRelationService(PersistentRelationService persistentRelationService) {
+    this.persistentRelationService = persistentRelationService;
+  }
+  public PersistentUpdateMethodService getPersistentUpdateMethodService() {
+    return persistentUpdateMethodService;
+  }
+  public void setPersistentUpdateMethodService(
+      PersistentUpdateMethodService persistentUpdateMethodService) {
+    this.persistentUpdateMethodService = persistentUpdateMethodService;
   }
   public String getRootHomePath() {
     return rootHomePath;

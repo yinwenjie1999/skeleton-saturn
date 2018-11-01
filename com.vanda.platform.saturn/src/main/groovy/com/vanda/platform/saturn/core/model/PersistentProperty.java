@@ -3,10 +3,14 @@ package com.vanda.platform.saturn.core.model;
 import com.vanda.platform.saturn.core.engine.annotation.SaturnValidate;
 
 /**
- * 持久化属性
+ * 模型中的属性信息描述
  * @author yinwenjie
  */
 public class PersistentProperty {
+  /**
+   * 该模型属性所属的class信息——完整的class信息
+   */
+  private String persistentClassName;
   /**
    * 该属性在持久化类中的排序索引。第一个属性编号为0
    */
@@ -119,5 +123,11 @@ public class PersistentProperty {
   }
   public void setCanInsert(Boolean canInsert) {
     this.canInsert = canInsert;
+  }
+  public String getPersistentClassName() {
+    return persistentClassName;
+  }
+  public void setPersistentClassName(String persistentClassName) {
+    this.persistentClassName = persistentClassName;
   }
 }

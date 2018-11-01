@@ -5,16 +5,10 @@ package com.vanda.platform.saturn.core.model;
  * @author yinwenjie
  */
 public class PersistentQueryMethod {
-  // 查询类型目前包括：等于、范围、小于、小于等于、大于、大于等于
-  public enum QueryType {
-    EQUAL, BETWEEN, LESSTHAN, LESSEQUALTHAN, GREATERTHAN, GREATEREQUALTHAN
-  }
   /**
-   * 目前排序类型包括：正向和逆向
+   * 该模型属性所属的class信息——完整的class信息
    */
-  public enum OrderType {
-    DESC,ASC
-  }
+  private String persistentClassName;
   /**
    * 该查询方法的目标属性名
    */
@@ -67,5 +61,22 @@ public class PersistentQueryMethod {
   }
   public void setOrderTypes(OrderType[] orderTypes) {
     this.orderTypes = orderTypes;
-  }  
+  }
+  public String getPersistentClassName() {
+    return persistentClassName;
+  }
+  public void setPersistentClassName(String persistentClassName) {
+    this.persistentClassName = persistentClassName;
+  }
+
+  // 查询类型目前包括：等于、范围、小于、小于等于、大于、大于等于
+  public enum QueryType {
+    EQUAL, BETWEEN, LESSTHAN, LESSEQUALTHAN, GREATERTHAN, GREATEREQUALTHAN
+  }
+  /**
+   * 目前排序类型包括：正向和逆向
+   */
+  public enum OrderType {
+    DESC,ASC
+  }
 }

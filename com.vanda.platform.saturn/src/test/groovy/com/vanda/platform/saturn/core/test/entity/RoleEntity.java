@@ -14,8 +14,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 /**
  * 角色信息，用于描述标准的spring security角色
  * @author yinwenjie
@@ -43,7 +41,6 @@ public class RoleEntity extends UuidEntity {
   private Date modifyDate;
 
   /** 状态 1正常, 0或者其它值：禁用. **/
-  @Type(type = "useStatus")
   @Column(name = "status", nullable = false)
   private Integer status = 1;
 

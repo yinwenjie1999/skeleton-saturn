@@ -1,7 +1,6 @@
 package com.vanda.platform.saturn.core.context.repository;
 
 import java.util.List;
-import java.util.Map;
 
 import com.vanda.platform.saturn.core.model.PersistentClass;
 
@@ -12,15 +11,15 @@ import com.vanda.platform.saturn.core.model.PersistentClass;
 public interface PersistentClassRepository {
   
   /**
-   * 该方法用于基于特定的存储技术，将已经扫描完成的（或者是再次扫描完成的）的持久层数据进行存储，包括PersistentClass的各种关联信息
-   * @param persistentMappingClasses
+   * 保存一个class模型定义，包括其可能的关联信息
+   * @param persistentClass
    */
-  public void refreshAllPersistentClass(Map<String , PersistentClass> persistentMappingClasses);
+  public void save(PersistentClass persistentClass);
   
   /**
-   * 该方法用于查询指定的完整类名所代表的PersistentClass的全部信息，包括所有关联信息
+   * 该方法用于查询指定的完整类名所代表的PersistentClass的全部信息，包括关联信息
    * @param className 指定的完整class的名字
-   * @return
+   * @return 
    */
   public PersistentClass queryByClassName(String className);
   

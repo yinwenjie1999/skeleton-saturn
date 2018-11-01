@@ -9,8 +9,6 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Type;
-
 import com.vanda.platform.saturn.core.engine.annotation.BuildCustomRepository;
 import com.vanda.platform.saturn.core.engine.annotation.BuildUpdateMethods;
 import com.vanda.platform.saturn.core.engine.annotation.BuildQueryMethods;
@@ -76,7 +74,6 @@ public class UserEntity extends UuidEntity {
    * 1：表示可用
    * 0和其它值：表示不可用
    */
-  @Type(type = "useStatus")
   @Column(name = "useStatus", nullable = false)
   private Integer useStatus = 1;
 

@@ -85,7 +85,9 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_N552wHduEeigNozO2eMt2A" name="ControllerGenerateHandler" isAbstract="true">
         <generalization xmi:id="_ACBrgHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Interface" xmi:id="_PXLGAHduEeigNozO2eMt2A" name="SaturnProjectHandler"/>
+      <packagedElement xmi:type="uml:Interface" xmi:id="_PXLGAHduEeigNozO2eMt2A" name="SaturnHandler">
+        <ownedOperation xmi:id="_JKNmgNwhEeiV8Y81LeBjvg" name="void handle(SaturnContext context)"/>
+      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_VuZt0HduEeigNozO2eMt2A" name="EntityGenerateHandler" isAbstract="true">
         <generalization xmi:id="_BkiAEHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
       </packagedElement>
@@ -144,16 +146,19 @@
     <packagedElement xmi:type="uml:Class" xmi:id="_j2LcwIl1EeiCpKAMxVgzeQ" name="OwnerTagJDTAnalysis">
       <generalization xmi:id="_waJ6sIl1EeiCpKAMxVgzeQ" general="_diQAkIl1EeiCpKAMxVgzeQ"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Interface" xmi:id="_RGZwANf6EeiV8Y81LeBjvg" name="ClassScanner"/>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_RGZwANf6EeiV8Y81LeBjvg" name="ClassScanner">
+      <generalization xmi:id="_AHsdINwhEeiV8Y81LeBjvg" general="_PXLGAHduEeigNozO2eMt2A"/>
+      <ownedOperation xmi:id="_pK6YUNwgEeiV8Y81LeBjvg" name="List&lt;PersistentClass> scan(String[] rootPackages)"/>
+    </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_fzZv8Nf6EeiV8Y81LeBjvg" name="SimpleClassScanner">
       <generalization xmi:id="_tNNCoNf6EeiV8Y81LeBjvg" general="_RGZwANf6EeiV8Y81LeBjvg"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Interface" xmi:id="_jxk1sNf6EeiV8Y81LeBjvg" name="ClassAnalysis"/>
+    <packagedElement xmi:type="uml:Interface" xmi:id="_jxk1sNf6EeiV8Y81LeBjvg" name="JavassistAnalysis"/>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_qjdZMNf6EeiV8Y81LeBjvg" client="_4qb9AHMHEeieN9sNL8eSww" supplier="_diQAkIl1EeiCpKAMxVgzeQ"/>
-    <packagedElement xmi:type="uml:Class" xmi:id="_1PQ0kNf6EeiV8Y81LeBjvg" name="JpaTagClassAnalysis">
+    <packagedElement xmi:type="uml:Class" xmi:id="_1PQ0kNf6EeiV8Y81LeBjvg" name="JpaTagJavassistAnalysis">
       <generalization xmi:id="_PO9QwNf7EeiV8Y81LeBjvg" general="_jxk1sNf6EeiV8Y81LeBjvg"/>
     </packagedElement>
-    <packagedElement xmi:type="uml:Class" xmi:id="_7qcIQNf6EeiV8Y81LeBjvg" name="OwnerTagClassAnalysis">
+    <packagedElement xmi:type="uml:Class" xmi:id="_7qcIQNf6EeiV8Y81LeBjvg" name="OwnerTagJavassistAnalysis">
       <generalization xmi:id="_QE9EoNf7EeiV8Y81LeBjvg" general="_jxk1sNf6EeiV8Y81LeBjvg"/>
     </packagedElement>
     <packagedElement xmi:type="uml:Dependency" xmi:id="_UX12INf7EeiV8Y81LeBjvg" client="_fzZv8Nf6EeiV8Y81LeBjvg" supplier="_jxk1sNf6EeiV8Y81LeBjvg"/>
