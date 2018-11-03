@@ -334,14 +334,10 @@ public abstract class JavassistAnalysis {
     
     // 对条件类型进行验证，有多少个属性，就需要有多少个查询类型，如果没有指定默认填补EQUAL
     QueryType[] queryTypeAnnotations = queryMethodAnnotation.queryType();
-    if(queryTypeAnnotations == null || queryTypeAnnotations.length == 0) {
-      queryTypeAnnotations = new QueryType[params.length];
-    }
-    PersistentQueryMethod.QueryType[] currentQueryTypes = null;
     // 进行填充
-    currentQueryTypes = new PersistentQueryMethod.QueryType[params.length];
+    PersistentQueryMethod.QueryType[] currentQueryTypes = new PersistentQueryMethod.QueryType[params.length];
     Arrays.fill(currentQueryTypes, PersistentQueryMethod.QueryType.EQUAL);
-    for(int index = 0 ; index < queryTypeAnnotations.length && index < params.length ; index++) {
+    for(int index = 0 ; queryTypeAnnotations != null && index < queryTypeAnnotations.length && index < params.length ; index++) {
       QueryType queryTypeItem = queryTypeAnnotations[index];
       String param = params[index];
       Validate.notBlank(param , "查询字段信息不能为null，或者空字符串，请检查!!");
@@ -383,12 +379,9 @@ public abstract class JavassistAnalysis {
     
     // 对排序类型进行验证和处理——主要是检查和处理排序方式和排序字段的相关性
     OrderType[] orderTypeAnnotations = queryMethodAnnotation.orderType();
-    PersistentQueryMethod.OrderType[] currentOrderTypes = null;
-    if(orderTypeAnnotations == null) {
-      currentOrderTypes = new PersistentQueryMethod.OrderType[orderParams.length];
-    }
+    PersistentQueryMethod.OrderType[] currentOrderTypes = new PersistentQueryMethod.OrderType[orderParams.length];
     Arrays.fill(currentOrderTypes, PersistentQueryMethod.OrderType.ASC);
-    for(int index = 0 ; index < orderTypeAnnotations.length && index < orderParams.length ; index++) {
+    for(int index = 0 ; orderTypeAnnotations != null && index < orderTypeAnnotations.length && index < orderParams.length ; index++) {
       OrderType orderTypeItem = orderTypeAnnotations[index];
       String orderParam = orderParams[index];
       Validate.notBlank(orderParam , "排序字段信息不能为null，或者空字符串，请检查!!");

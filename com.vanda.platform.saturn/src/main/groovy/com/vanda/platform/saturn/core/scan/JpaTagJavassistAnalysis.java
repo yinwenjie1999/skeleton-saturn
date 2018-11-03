@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.Validate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,6 +102,7 @@ public class JpaTagJavassistAnalysis extends JavassistAnalysis {
       property.setUnique(true);
       property.setPropertyDbName("id");
       property.setNullable(false);
+      property.setPropertyDesc("主键");
     }
     property.setPropertyClass(fieldType.getName());
     
@@ -164,6 +166,9 @@ public class JpaTagJavassistAnalysis extends JavassistAnalysis {
       }
       property.setValidateType(saturnValidateAnnotation.type());
     }
+    
+    // 分析后的字段，无论是不是持久层的模型对象，都必须使用SaturnColumn注解完成字段名称的描述
+    Validate.notBlank(property.getPropertyDesc() , "必须使用SaturnColumn注解完成字段名称的描述[" + fieldItem.getName() + ":" + property.getPropertyClass() + "]");
     return property;
   }
 
@@ -173,18 +178,18 @@ public class JpaTagJavassistAnalysis extends JavassistAnalysis {
   @Override
   protected PersistentRelation analysisRelationField(Class<?> reflectClass, CtField fieldItem, int fieldIndex) {
     // 在分析一般属性时，只有具有SaturnColumn注解或者Column注解的属性才有分析的意义
-    boolean hasSaturnColumnAnnotation = fieldItem.hasAnnotation(SaturnColumn.class);
     boolean hasJoinColumnAnnotation = fieldItem.hasAnnotation(JoinColumn.class);
     boolean hasManyToOneAnnotation = fieldItem.hasAnnotation(ManyToOne.class);
     boolean hasManyToManyAnnotation = fieldItem.hasAnnotation(ManyToMany.class);
     boolean hasOneToManyAnnotation = fieldItem.hasAnnotation(OneToMany.class);
     boolean hasOneToOneAnnotation = fieldItem.hasAnnotation(OneToOne.class);
     boolean hasSaturnRelationAnnotation = fieldItem.hasAnnotation(SaturnColumnRelation.class);
-    if(!hasSaturnColumnAnnotation && !hasJoinColumnAnnotation && !hasManyToOneAnnotation
+    if(!hasJoinColumnAnnotation && !hasManyToOneAnnotation
         && !hasManyToManyAnnotation && !hasOneToManyAnnotation && !hasOneToOneAnnotation
         && !hasSaturnRelationAnnotation) {
       return null;
     } 
+    boolean hasSaturnColumnAnnotation = fieldItem.hasAnnotation(SaturnColumn.class);
     
     CtClass fieldType = null;
     // 关联的信息实际上
@@ -323,6 +328,8 @@ public class JpaTagJavassistAnalysis extends JavassistAnalysis {
       LOGGER.warn("错误的关联类型，请检查建模情况");
       return null;
     }
+    
+    Validate.notBlank(relation.getPropertyDesc() , "必须使用SaturnColumn注解完成字段名称的描述[" + fieldItem.getName() + ":" + relation.getPropertyClass() + "]");
     return relation;
   }
 }

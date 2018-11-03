@@ -2,7 +2,6 @@ package com.vanda.platform.saturn.core.scan;
 
 import java.util.List;
 
-import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Annotation;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;

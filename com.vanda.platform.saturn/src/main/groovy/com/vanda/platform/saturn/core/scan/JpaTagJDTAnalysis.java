@@ -3,7 +3,6 @@ package com.vanda.platform.saturn.core.scan;
 import java.util.List;
 
 import org.eclipse.jdt.core.dom.Annotation;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.ImportDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
@@ -42,8 +41,8 @@ public class JpaTagJDTAnalysis implements JDTAnalysis {
      * 四、去重处理后，最终生成PersistentClass对象
      * */
     
-    PersistentClass persistentClass = new PersistentClass();
-    FieldDeclaration[] Fields = publicTypeDecl.getFields();
+//    PersistentClass persistentClass = new PersistentClass();
+//    FieldDeclaration[] Fields = publicTypeDecl.getFields();
     // TODO 继续写
     
     // TODO Auto-generated method stub

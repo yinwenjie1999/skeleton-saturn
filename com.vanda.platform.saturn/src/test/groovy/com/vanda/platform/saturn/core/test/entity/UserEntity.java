@@ -55,18 +55,21 @@ public class UserEntity extends UuidEntity {
 
   /** 性别.0保密，1男 2女 */
   @Column(name = "gender")
+  @SaturnColumn(description="性别")
   private Integer gender = 0;
 
   /**
    * 用户账号登录信息
    */
   @Column(name = "user_account", length = 64, nullable = false, unique = true)
+  @SaturnColumn(description="用户账户")
   private String account;
 
   /**
    * 用户账号密码信息（经过加密的）
    */
   @Column(name = "user_password", length = 64, nullable = false)
+  @SaturnColumn(description="密码")
   private String password;
 
   /**
@@ -75,28 +78,33 @@ public class UserEntity extends UuidEntity {
    * 0和其它值：表示不可用
    */
   @Column(name = "useStatus", nullable = false)
+  @SaturnColumn(description="用户状态")
   private Integer useStatus = 1;
 
   /** 角色和人员相关的. **/
   @ManyToMany(fetch = FetchType.LAZY, mappedBy = "users")
+  @SaturnColumn(description="关联角色")
   private Set<RoleEntity> roles;
 
   /**
    * 创建时间
    */
   @Column(name = "createTime", length = 64, nullable = false)
+  @SaturnColumn(description="创建时间")
   private Date createTime=new Date();
   
   /**
    * 人员主要联系电话
    */
   @Column(name = "user_phone", length = 64, nullable = true, unique = true)
+  @SaturnColumn(description="联系电话")
   private String phone = "";
   
   /**
    * 排序信息，值越大，排序越靠后
    */
   @Column(name = "listsort", nullable = false)
+  @SaturnColumn(description="排序依据")
   private Integer listsort = 100;
 
   public String getUserName() {

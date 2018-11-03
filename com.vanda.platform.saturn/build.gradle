@@ -27,10 +27,11 @@ dependencies {
   compile 'org.slf4j:slf4j-api:1.7.25'
   compile 'org.apache.commons:commons-lang3:3.6'
   compile 'org.eclipse.jdt:org.eclipse.jdt.core:3.13.102'
-  compile 'com.github.wumpz:diffutils:2.2+'
   compile 'org.javassist:javassist:3.23.1-GA+'
   compile 'org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.2.Final+'
   compile 'net.sf.ehcache:ehcache:2.10.5+'
+  compile 'com.github.wumpz:diffutils:2.2+'
+  compile 'com.alibaba:fastjson:1.2.35+'
   
   testCompile 'junit:junit:4.12'
   testCompile 'com.vanda.platform.im21:pojo:2.1-SNAPSHOT'

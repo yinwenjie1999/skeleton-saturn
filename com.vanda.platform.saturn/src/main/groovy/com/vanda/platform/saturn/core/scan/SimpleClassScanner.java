@@ -48,6 +48,8 @@ public class SimpleClassScanner implements ClassScanner {
   
   private static ClassPool classPool = ClassPool.getDefault();
   
+  private List<PersistentClass> persistentClasses = null;
+  
   static {
     ClassLoader currentClassLoader = Thread.currentThread().getContextClassLoader();
     classPool.appendClassPath(new LoaderClassPath(currentClassLoader));
@@ -58,9 +60,9 @@ public class SimpleClassScanner implements ClassScanner {
    */
   @Override
   public void handle(SaturnContext context) {
-    // TODO 这里还没有从上下文会话中取出
-    String[] rootPackages = new String[]{"com.vanda.platform"};
-    this.scan(rootPackages);
+    String[] rootScanPackages = context.getRootScanPackages();
+    Validate.isTrue(rootScanPackages != null && rootScanPackages.length > 0 , "请为骨架分析器指定扫描模型定义的根包路径（至少指定一个）");
+    persistentClasses = this.scan(rootScanPackages);
   }
 
   /* (non-Javadoc)
@@ -84,9 +86,10 @@ public class SimpleClassScanner implements ClassScanner {
      * 进行分析
      * */
     for (String rootPackage : rootPackages) {
+      String rootPackagePath = StringUtils.replaceAll(rootPackage, "\\.", "/");
       Enumeration<URL> urls = null;
       try {
-        urls = currentClassLoader.getResources(rootPackage);
+        urls = currentClassLoader.getResources(rootPackagePath);
       } catch (IOException e) {
         LOGGER.warn(e.getMessage());
         continue;
@@ -204,6 +207,7 @@ public class SimpleClassScanner implements ClassScanner {
         scanFileForFields(persistentClassMapping , javassistAnalysisMapping,  file.getAbsolutePath() , currentPackageName + "." + childPackageName);
       } else {
         String fileName = file.getName();
+        LOGGER.debug("current fileName = " + fileName);
         // 只有class文件才符合处理条件，否则跳过即可
         if(!file.getName().endsWith(".class")) return;
         String fileSortName = StringUtils.removeEnd(fileName, ".class");
@@ -320,5 +324,9 @@ public class SimpleClassScanner implements ClassScanner {
       }
     }
     persistentClass.setUpdateMethods(persistentUpdateMethods);
+  }
+
+  public List<PersistentClass> getPersistentClasses() {
+    return persistentClasses;
   }
 }

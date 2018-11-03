@@ -34,10 +34,12 @@ public class CompetenceEntity extends UuidEntity {
    * 权限对应的角色信息
    */
   @ManyToMany(mappedBy = "competences")
+  @SaturnColumn(description="角色信息")
   private Set<RoleEntity> roles;
 
   /** 备注. **/
   @Column(name = "comment", nullable = false)
+  @SaturnColumn(description="备注")
   private String comment = "";
 
   public String getComment() {

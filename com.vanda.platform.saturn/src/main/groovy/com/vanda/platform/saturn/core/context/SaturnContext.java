@@ -34,22 +34,28 @@ public abstract class SaturnContext {
    */
   protected PersistentUpdateMethodService persistentUpdateMethodService;
   /**
-   * 根工程的完整工程路径
-   * 例如根工程的完整路径为：/usr/local/rootproject；那么这里的工程home project为：/usr/local/
+   * TODO 目前还未使用
+   * 根工程的完整工程路径,例如根工程的完整路径为：/usr/local/rootproject；那么这里的工程home project为：/usr/local/
    */
   private String rootHomePath;
-  /**
+  /**TODO 目前还未使用
    * 根工程的完整工程名，不是说完整的路径名
    */
   private String rootProject;
   /**
+   * TODO 目前还未使用
    * 实体定义工程的名字，只会有一个
    */
   private String entityProjectName;
   /**
+   * TODO 目前还未使用
    * 业务性质工程的名字，可能有多个
    */
   private String[] projectNames;
+  /**
+   * 需要进行模型扫描的根路径，可以是本工程的，也可以是其它依赖工程的
+   */
+  private String[] rootScanPackages;
   
   public PersistentClassService getPersistentClassService() {
     return persistentClassService;
@@ -106,5 +112,11 @@ public abstract class SaturnContext {
   }
   public void setProjectNames(String[] projectNames) {
     this.projectNames = projectNames;
+  }
+  public String[] getRootScanPackages() {
+    return rootScanPackages;
+  }
+  public void setRootScanPackages(String[] rootScanPackages) {
+    this.rootScanPackages = rootScanPackages;
   }
 }

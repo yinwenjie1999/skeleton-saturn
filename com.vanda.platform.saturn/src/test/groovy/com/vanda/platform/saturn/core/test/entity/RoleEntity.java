@@ -14,6 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.vanda.platform.saturn.core.engine.annotation.SaturnColumn;
+
 /**
  * 角色信息，用于描述标准的spring security角色
  * @author yinwenjie
@@ -30,22 +32,27 @@ public class RoleEntity extends UuidEntity {
 
   /** 角色名称. **/
   @Column(name = "name", length = 64, nullable = false, unique = true)
+  @SaturnColumn(description="角色名称")
   private String name = "";
 
   /** 创建时间. **/
   @Column(name = "create_date", nullable = false)
+  @SaturnColumn(description="创建时间")
   private Date createDate = new Date();
 
   /** 修改时间. **/
   @Column(name = "modify_date")
+  @SaturnColumn(description="修改时间")
   private Date modifyDate;
 
   /** 状态 1正常, 0或者其它值：禁用. **/
   @Column(name = "status", nullable = false)
+  @SaturnColumn(description="角色状态")
   private Integer status = 1;
 
   /** 备注.角色信息说明 **/
   @Column(name = "comment", length = 64, nullable = true)
+  @SaturnColumn(description="角色说明")
   private String comment = "";
 
   /**
@@ -54,11 +61,13 @@ public class RoleEntity extends UuidEntity {
    */
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "role_user_mapping", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "user_id")})
+  @SaturnColumn(description="关联用户")
   private Set<UserEntity> users;
 
   /** 角色和功能的对应关系. **/
   @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(name = "role_competence_mapping", joinColumns = {@JoinColumn(name = "role_id")}, inverseJoinColumns = {@JoinColumn(name = "competence_id")})
+  @SaturnColumn(description="关联功能")
   private Set<CompetenceEntity> competences;
 
   public String getName() {
