@@ -95,6 +95,28 @@ public class SimplePersistentPropertyService implements PersistentPropertyServic
   }
 
   /* (non-Javadoc)
+   * @see com.vanda.platform.saturn.core.context.service.PersistentPropertyService#findPrimaryKey(java.lang.String)
+   */
+  @Override
+  public PersistentProperty findPrimaryKey(String className) {
+    if(StringUtils.isBlank(className)) {
+      return null;
+    }
+    
+    PersistentClass persistentClass = this.persistentClassMapping.get(className);
+    List<PersistentProperty> properties = persistentClass.getProperties();
+    if(properties == null || properties.isEmpty()) {
+      return null;
+    }
+    
+    List<PersistentProperty> primaryKeys = properties.stream().filter(item -> item.getPrimaryKey()).collect(Collectors.toList());
+    if(primaryKeys == null || primaryKeys.isEmpty()) {
+      return null;
+    }
+    return primaryKeys.get(0);
+  }
+
+  /* (non-Javadoc)
    * @see com.vanda.platform.saturn.core.context.service.PersistentPropertyService#findByPropertyName(java.lang.String, java.lang.String)
    */
   @Override

@@ -31,6 +31,10 @@ public class PersistentClass {
    */
   private Boolean repositoryEntity = false;
   /**
+   * 如果是一个JPA持久层对象模型，就需要记录持久层的数据表名字
+   */
+  private String repositoryTable;
+  /**
    * 该持久化描述类是否需要激活自定义持久层类（基于JPA）
    */
   private Boolean buildCustomRepository = false;
@@ -115,5 +119,11 @@ public class PersistentClass {
   }
   public void setDomain(String domain) {
     this.domain = domain;
+  }
+  public String getRepositoryTable() {
+    return repositoryTable;
+  }
+  public void setRepositoryTable(String repositoryTable) {
+    this.repositoryTable = repositoryTable;
   }
 }

@@ -55,6 +55,14 @@ public class SimplePersistentClassService implements PersistentClassService {
   }
 
   /* (non-Javadoc)
+   * @see com.vanda.platform.saturn.core.context.service.PersistentClassService#queryAllClasses()
+   */
+  @Override
+  public List<PersistentClass> queryAllClasses() {
+    return new LinkedList<>(this.persistentClassMapping.values());
+  }
+
+  /* (non-Javadoc)
    * @see com.vanda.platform.saturn.core.context.repository.PersistentClassRepository#queryByClassName(java.lang.String)
    */
   @Override

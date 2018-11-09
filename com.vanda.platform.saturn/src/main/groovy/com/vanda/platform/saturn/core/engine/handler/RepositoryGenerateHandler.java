@@ -4,6 +4,7 @@ import com.vanda.platform.saturn.core.context.SaturnContext;
 
 /**
  * 该处理驱动负责根据完成的实体层扫描内容，按照设置的要求生成存储层代码
+ * @deprecated 目前看来该类结构存在问题，直接使用HibernateRepositoryGenerateHandler和IbatisRepositoryGenerateHandler
  * @author yinwenjie
  */
 public abstract class RepositoryGenerateHandler implements SaturnHandler {

@@ -1,13 +1,13 @@
 package com.vanda.platform.saturn.core.scan;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
+import javax.persistence.Table;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -86,6 +86,15 @@ public abstract class JavassistAnalysis {
     boolean hasSaturnEntityAnnotation = currentCtClass.hasAnnotation(SaturnEntity.class);
     if(!hasEntityAnnotation && !hasSaturnEntityAnnotation && !isChildPersistent) {
       return null;
+    }
+    if(hasEntityAnnotation && currentCtClass.hasAnnotation(Table.class)) {
+      try {
+        Table tableAnnotation = (Table)currentCtClass.getAnnotation(Table.class);
+        prsistentClass.setRepositoryTable(tableAnnotation.name());
+      } catch (ClassNotFoundException e) {
+        LOGGER.error(e.getMessage() , e);
+        return null;
+      }
     }
     
     // 2、=========================
@@ -264,8 +273,8 @@ public abstract class JavassistAnalysis {
     Validate.isTrue(persistentRelations != null && !persistentRelations.isEmpty() , "没有找到模型结构中的指定属性!!");
     Map<String, PersistentProperty> persistentPropertyMapping = 
         persistentPropertys.stream().collect(Collectors.toMap(PersistentProperty::getPropertyName, persistentProperty -> persistentProperty));
-    // TODO 这个stream的写法还有一些问题
-    Map<String, PersistentRelation> persistentRelationMapping = new HashMap<>();
+    Map<String, PersistentRelation> persistentRelationMapping =  
+        persistentRelations.stream().collect(Collectors.toMap(PersistentRelation::getPropertyName, persistentRelation -> persistentRelation));
     
     // 开始查询
     String currentParamItem = paramArrayItems[itemIndex];

@@ -33,7 +33,11 @@ public interface PersistentClassService {
    * @return 
    */
   public PersistentClass queryByClassName(String className);
-  
+  /**
+   * 查询目前扫描到的所有模型类信息（无论是否是数据层模型）
+   * @return
+   */
+  public List<PersistentClass> queryAllClasses();
   /**
    * 返回指定域下的多个PersistentClass信息，但是不包括这些模型类定义信息的关联信息
    * @param domainName 指定的域信息

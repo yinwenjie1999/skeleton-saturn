@@ -19,6 +19,13 @@ public interface PersistentPropertyService {
   public Map<String, PersistentProperty> findByClassName(String className);
   
   /**
+   * 更服务用于找到指定模型类中的主键字段信息，目前的骨架设计中，这个主键字段信息只可能有一个
+   * @param className 指定的静态类模型定义
+   * @return 
+   */
+  public PersistentProperty findPrimaryKey(String className);
+  
+  /**
    * 按照模型类完整名称和属性完整名称，查询这个属性。
    * @param className 模型类的完整类名
    * @param propertyName 完整属性名
