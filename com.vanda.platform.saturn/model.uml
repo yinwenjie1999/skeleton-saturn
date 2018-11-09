@@ -91,9 +91,6 @@
       <packagedElement xmi:type="uml:Class" xmi:id="_VuZt0HduEeigNozO2eMt2A" name="EntityGenerateHandler" isAbstract="true">
         <generalization xmi:id="_BkiAEHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
       </packagedElement>
-      <packagedElement xmi:type="uml:Class" xmi:id="_ZcAoAHduEeigNozO2eMt2A" name="RepositoryGenerateHandler" isAbstract="true">
-        <generalization xmi:id="_CfsAwHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
-      </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_gBHTwHduEeigNozO2eMt2A" name="ServiceGenerateHandler" isAbstract="true">
         <generalization xmi:id="_DIFdgHdvEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
       </packagedElement>
@@ -101,13 +98,18 @@
         <generalization xmi:id="_6crMkHduEeigNozO2eMt2A" general="_N552wHduEeigNozO2eMt2A"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_2LnnEHduEeigNozO2eMt2A" name="HibernateRepositoryGenerateHandler">
-        <generalization xmi:id="_9s7cYHduEeigNozO2eMt2A" general="_ZcAoAHduEeigNozO2eMt2A"/>
+        <generalization xmi:id="_9s7cYHduEeigNozO2eMt2A" general="_PXLGAHduEeigNozO2eMt2A"/>
+        <generalization xmi:id="_dofi8OQAEeiV8Y81LeBjvg" general="__Yr8cOP_EeiV8Y81LeBjvg"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_4u2_4HduEeigNozO2eMt2A" name="SimpleServiceGenerateHandler">
         <generalization xmi:id="_-cWuMHduEeigNozO2eMt2A" general="_gBHTwHduEeigNozO2eMt2A"/>
       </packagedElement>
       <packagedElement xmi:type="uml:Class" xmi:id="_KM_vwHjlEeigNozO2eMt2A" name="IbatisRepositoryGenerateHandler">
-        <generalization xmi:id="_QTB54HjlEeigNozO2eMt2A" general="_ZcAoAHduEeigNozO2eMt2A"/>
+        <generalization xmi:id="_aF4-4OQAEeiV8Y81LeBjvg" general="_PXLGAHduEeigNozO2eMt2A"/>
+        <generalization xmi:id="_fF7xUOQAEeiV8Y81LeBjvg" general="__Yr8cOP_EeiV8Y81LeBjvg"/>
+      </packagedElement>
+      <packagedElement xmi:type="uml:Class" xmi:id="__Yr8cOP_EeiV8Y81LeBjvg" name="AbstractJavaFileGenerateHandler">
+        <ownedOperation xmi:id="_6TyCsOQAEeiV8Y81LeBjvg" name="void buildJavaFile(String fileContexts , String projectSrcAbsolutePath , String packageName , String simpleClassName)"/>
       </packagedElement>
     </packagedElement>
     <packagedElement xmi:type="uml:Class" xmi:id="_o0-lsHjlEeigNozO2eMt2A" name="SaturnEngine"/>
