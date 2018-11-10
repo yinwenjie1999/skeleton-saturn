@@ -3,6 +3,7 @@ package com.vanda.platform.saturn.core.context.service.simple;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -17,7 +18,8 @@ import com.vanda.platform.saturn.core.model.PersistentQueryMethod;
 public class SimpleQueryMethodService implements PersistentQueryMethodService {
   private Map<String, PersistentClass> persistentClassMapping;
   
-  SimpleQueryMethodService(Map<String, PersistentClass> persistentClassMapping) {
+  // TODO 这里的public只是为了跑单元测试，正式发布要去掉
+  public SimpleQueryMethodService(Map<String, PersistentClass> persistentClassMapping) {
     this.persistentClassMapping = persistentClassMapping;
   }
 
@@ -35,6 +37,8 @@ public class SimpleQueryMethodService implements PersistentQueryMethodService {
     Validate.notNull(persistentClass , "没有找到指定的类模型[" + persistentClassName + "]");
     String[] params = queryMethod.getParams();
     Validate.isTrue(params != null && params.length > 0 , "请至少指定一个参数信息!!");
+    String methodName = queryMethod.getMethodName();
+    Validate.isTrue(StringUtils.startsWithAny(methodName, "find","query") , "自定义查询方法必须以find或者query关键字开始!!");
     
     // 确认这个方法是否已经存在于集合中
     List<PersistentQueryMethod> queryMethods = persistentClass.getQueryMethods();
@@ -42,15 +46,11 @@ public class SimpleQueryMethodService implements PersistentQueryMethodService {
       queryMethods = new LinkedList<>();
       persistentClass.setQueryMethods(queryMethods);
     }
-    int index = 0;
-    boolean found = false;
-    for (; index < queryMethods.size() ; index++) {
-      PersistentQueryMethod queryMethodItem = queryMethods.get(index);
-      // 只有所有的参数都一致，才认为是重复的方法
-      // TODO 未完成
-    }
-    if(found) {
-      queryMethods.set(index, queryMethod);
+    // 方法名一致时就认为是重复的方法了
+    List<String> currentMethodNames = queryMethods.stream().map(PersistentQueryMethod::getMethodName).collect(Collectors.toList());
+    int foundIndex = currentMethodNames.indexOf(methodName);
+    if(foundIndex != -1) {
+      queryMethods.set(foundIndex, queryMethod);
     } else {
       queryMethods.add(queryMethod);
     }

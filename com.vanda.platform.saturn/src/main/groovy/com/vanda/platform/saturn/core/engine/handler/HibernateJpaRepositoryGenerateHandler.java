@@ -2,9 +2,9 @@ package com.vanda.platform.saturn.core.engine.handler;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
@@ -56,7 +56,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
     // 1、=========
     String rootPackage = context.getRootPackage();
     String projectAbsolutePath = context.getProjectAbsolutePath();
-    String projectSrcAbsolutePath = StringUtils.join(context.getProjectSrcPath() , "/" , projectAbsolutePath);
+    String projectSrcAbsolutePath = StringUtils.join(projectAbsolutePath , "/" , context.getProjectSrcPath());
     Validate.notBlank(rootPackage , "必须指定根包路径[rootPackages]，才能在根包路径的位置完成数据层代码生成");
     Validate.notBlank(projectSrcAbsolutePath , "必须指定主代码路径[projectSrcAbsolutePath]");
     PersistentClassService persistentClassService = context.getPersistentClassService();
@@ -79,7 +79,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
     // 开始进行循环处理，视情况确认当出现异常时是终止还是继续下一个
     Map<String, String> importMapping = new HashMap<>();
     for (PersistentClass itemPersistentClass : entityPersistentClasses) {
-      String simpleClassName = itemPersistentClass.getClassName();
+      String simpleClassName = itemPersistentClass.getSimpleClassName();
       String repositoryInternalPackage = StringUtils.join(rootPackage,".repository.internal");
       String repositoryPackage = StringUtils.join(rootPackage , ".repository");
       String repositorySimpleClass = StringUtils.join(simpleClassName , "Repository");
@@ -128,17 +128,17 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
      * }
      * */
     String persistentClassName = persistentClass.getClassName();
-    String simpleClassName = persistentClass.getClassName();
+    String simpleClassName = persistentClass.getSimpleClassName();
     String repositoryInternalPackage = StringUtils.join(rootPackage,".repository.internal");
     String customRepositorySimpleClass = StringUtils.join(simpleClassName , "RepositoryCustom");
     
     // 开始生成内容——package和class
     StringBuffer code = new StringBuffer();
-    code.append(repositoryInternalPackage).append(System.lineSeparator());
+    code.append("package ").append(repositoryInternalPackage).append(";").append(System.lineSeparator());
     code.append("import java.util.Map;").append(System.lineSeparator());
     code.append("import org.springframework.data.domain.Page;").append(System.lineSeparator());
     code.append("import org.springframework.data.domain.Pageable;").append(System.lineSeparator());
-    code.append(persistentClassName).append(System.lineSeparator());
+    code.append("import ").append(persistentClassName).append(";").append(System.lineSeparator());
     
     // 生成interface的描述
     code.append("/**").append(System.lineSeparator());
@@ -150,6 +150,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
     code.append("public interface ").append(customRepositorySimpleClass).append(" {").append(System.lineSeparator());
     code.append("  /**").append(System.lineSeparator());
     code.append("   * 这是分页方法的雏形，可以根据业务要求进行修改").append(System.lineSeparator());
+    code.append("   */").append(System.lineSeparator());
     code.append("  Page<").append(simpleClassName).append("> queryPage(Pageable pageable , Map<String, Object> conditions);").append(System.lineSeparator());
     code.append("}").append(System.lineSeparator());
     return code;
@@ -177,21 +178,22 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
      * }
      * */
     String persistentClassName = persistentClass.getClassName();
-    String simpleClassName = persistentClass.getClassName();
+    String simpleClassName = persistentClass.getSimpleClassName();
     String repositoryInternalPackage = StringUtils.join(rootPackage,".repository.internal");
     String customRepositorySimpleClass = StringUtils.join(simpleClassName , "RepositoryCustom");
     String customRepositoryImplSimpleClass = StringUtils.join(simpleClassName , "RepositoryImpl");
     
     // 开始生成内容——package和class
     StringBuffer code = new StringBuffer();
-    code.append(repositoryInternalPackage).append(System.lineSeparator());
+    code.append("package ").append(repositoryInternalPackage).append(";").append(System.lineSeparator());
     code.append("import java.util.Map;").append(System.lineSeparator());
     code.append("import javax.persistence.EntityManager;").append(System.lineSeparator());
     code.append("import javax.persistence.PersistenceContext;").append(System.lineSeparator());
     code.append("import org.springframework.beans.factory.annotation.Autowired;").append(System.lineSeparator());
     code.append("import org.springframework.data.domain.Page;").append(System.lineSeparator());
     code.append("import org.springframework.data.domain.Pageable;").append(System.lineSeparator());
-    code.append(persistentClassName).append(System.lineSeparator());
+    code.append("import org.springframework.beans.factory.annotation.Autowired;").append(System.lineSeparator());
+    code.append("import ").append(persistentClassName).append(";").append(System.lineSeparator());
     
     // 生成class的描述
     code.append("/**").append(System.lineSeparator());
@@ -243,22 +245,21 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
      * 3、组装定义内容，并最终形成一个XXXXRepository.java的文件内容
      * 4、一旦文件内容创建成功构建成功
      */
-    String pkage = persistentClass.getPkage();
     String simpleClassName = persistentClass.getSimpleClassName();
     String className = persistentClass.getClassName();
     StringBuffer javacontexts = new StringBuffer();
     String repositoryPacke = StringUtils.join(rootPackage,".repository");
     String repositorySimpleClassName = StringUtils.join(simpleClassName , "Repository");
-    String repositoryClassName = StringUtils.join(repositoryPacke , ".", repositorySimpleClassName);
     String repositoryInternalPacke = StringUtils.join(rootPackage,".repository.internal");
     String repositoryInternalSimpleClassName = StringUtils.join(simpleClassName , "RepositoryCustom");
     String repositoryInternalClassName = StringUtils.join(repositoryInternalPacke, "." , repositoryInternalSimpleClassName);
     PersistentProperty primaryKey = persistentPropertyService.findPrimaryKey(className);
     String primaryKeyClass = primaryKey.getPropertyClass();
     importMapping.put(primaryKeyClass , primaryKeyClass);
+    importMapping.put("org.springframework.data.jpa.repository.Modifying" , "org.springframework.data.jpa.repository.Modifying");
     
     // 1、=============
-    javacontexts.append("package " + pkage + System.lineSeparator());
+    javacontexts.append("package " + repositoryPacke + ";" + System.lineSeparator());
     if(importMapping == null || importMapping.isEmpty()) {
       LOGGER.error("错误的import参数信息，请检查!!");
       return null;
@@ -267,46 +268,51 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
     importMapping.put("org.springframework.data.jpa.repository.JpaSpecificationExecutor" , "org.springframework.data.jpa.repository.JpaSpecificationExecutor");
     importMapping.put("org.springframework.stereotype.Repository" , "org.springframework.stereotype.Repository");
     importMapping.put(className, className);
-    Set<String> importSet = importMapping.keySet();
     if(persistentClass.getBuildCustomRepository()) {
       importMapping.put(repositoryInternalClassName, repositoryInternalClassName);
     }
-    // 排序，这样出来的import代码信息更具有可读性
-    List<String> imports = importSet.stream().sorted((target , souce) -> StringUtils.compare(target, souce))
-    .collect(Collectors.toList());
-    String importContext = StringUtils.join(imports.toArray(new String[]{}), System.lineSeparator());
-    javacontexts.append(importContext).append(System.lineSeparator());
     
     // 2、 ============
-    javacontexts.append(System.lineSeparator());
-    javacontexts.append("/**").append(System.lineSeparator());
-    javacontexts.append(" * ").append(simpleClassName).append("业务模型的数据库方法支持").append(System.lineSeparator());
-    javacontexts.append(" * @author saturn").append(System.lineSeparator());
-    javacontexts.append("*/").append(System.lineSeparator());
-    javacontexts.append("@Repository(\"_").append(simpleClassName).append("Repository\")").append(System.lineSeparator());
-    javacontexts.append("public interface ").append(repositoryClassName).append(System.lineSeparator());
-    javacontexts.append("    extends").append(System.lineSeparator());
-    javacontexts.append("      JpaRepository<").append(TStringUtils.getSimpleClassName(className)).append(", ").append(TStringUtils.getSimpleClassName(primaryKeyClass)).append(">").append(System.lineSeparator());
-    javacontexts.append("      ,JpaSpecificationExecutor<").append(TStringUtils.getSimpleClassName(className)).append(">").append(System.lineSeparator());
+    StringBuffer javaBodyContext = new StringBuffer();
+    javaBodyContext.append(System.lineSeparator());
+    javaBodyContext.append("/**").append(System.lineSeparator());
+    javaBodyContext.append(" * ").append(simpleClassName).append("业务模型的数据库方法支持").append(System.lineSeparator());
+    javaBodyContext.append(" * @author saturn").append(System.lineSeparator());
+    javaBodyContext.append(" */").append(System.lineSeparator());
+    javaBodyContext.append("@Repository(\"_").append(simpleClassName).append("Repository\")").append(System.lineSeparator());
+    javaBodyContext.append("public interface ").append(repositorySimpleClassName).append(System.lineSeparator());
+    javaBodyContext.append("    extends").append(System.lineSeparator());
+    javaBodyContext.append("      JpaRepository<").append(TStringUtils.getSimpleClassName(className)).append(", ").append(TStringUtils.getSimpleClassName(primaryKeyClass)).append(">").append(System.lineSeparator());
+    javaBodyContext.append("      ,JpaSpecificationExecutor<").append(TStringUtils.getSimpleClassName(className)).append(">").append(System.lineSeparator());
     if(persistentClass.getBuildCustomRepository()) {
-      javacontexts.append("      ,").append(repositoryInternalSimpleClassName).append(" ").append(System.lineSeparator());
+      javaBodyContext.append("      ,").append(repositoryInternalSimpleClassName).append(" ").append(System.lineSeparator());
     }
-    javacontexts.append("      {");
+    javaBodyContext.append("  {").append(System.lineSeparator());
     
     // 3、======================
     // 首先是普通的关联查询
     StringBuffer methodContexts = this.buildRelationQueryMethods(persistentClass, importMapping, persistentPropertyService);
-    javacontexts.append(methodContexts);
-    javacontexts.append(System.lineSeparator());
+    javaBodyContext.append(methodContexts);
+    javaBodyContext.append(System.lineSeparator());
     // 然后是自定义查询
     methodContexts = this.buildCustomQueryMethods(persistentClass, persistentClassService, persistentPropertyService, persistentRelationService, importMapping);
-    javacontexts.append(methodContexts);
-    javacontexts.append(System.lineSeparator());
+    javaBodyContext.append(methodContexts);
+    javaBodyContext.append(System.lineSeparator());
     // 最后是自定义更新
     methodContexts = this.buildCustomUpdateMethods(persistentClass, importMapping, persistentPropertyService, persistentRelationService);
-    javacontexts.append(methodContexts);
-    javacontexts.append(System.lineSeparator());    
+    javaBodyContext.append(methodContexts);
+    javaBodyContext.append(System.lineSeparator());    
+    
+    // 最后再排序import，这样出来的import代码信息更具有可读性
+    List<String> importsList = new LinkedList<>();
+        importMapping.keySet()
+        .stream().sorted((target , souce) -> StringUtils.compare(target, souce))
+        .forEach(importItem -> importsList.add("import " + importItem + ";"));
+    String importContext = StringUtils.join(importsList.toArray(new String[]{}), System.lineSeparator());
+    javacontexts.append(importContext).append(System.lineSeparator());
+    javacontexts.append(javaBodyContext);
     javacontexts.append("}");
+    
     LOGGER.debug("===================" + repositorySimpleClassName + ":" + javacontexts.toString());
     return javacontexts;
   }
@@ -343,6 +349,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
     
     // TODO 这个方法存在递归，比较复杂，需要放置到一个私有方法中处理
     for (PersistentQueryMethod queryMethodItem : persistentQueryMethods) {
+      String methodName = queryMethodItem.getMethodName();
       String description = queryMethodItem.getDescription();
       String params[] = queryMethodItem.getParams();
       QueryType queryTypes[] = queryMethodItem.getQueryTypes();
@@ -375,23 +382,28 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       // 需要构建的左外连接
       code.append(leftJoinContexts);
       // 需要构建的条件
-      code.append("      + \" where ").append(conditionParamsContexts).append(System.lineSeparator());
+      code.append("      + \" where ").append(conditionParamsContexts).append(" \" ");
       // 需要构造的排序条件
       if(orderByParams != null && orderTypes != null && orderByParams.length == orderTypes.length) {
-        StringBuffer orderContxt = new StringBuffer();
+        StringBuffer orderContxt = new StringBuffer(System.lineSeparator() + "      + \" order by ");
         for(int index = 0 ; index < orderByParams.length ; index++) {
           if(index != 0) {
             orderContxt.append(",");
           }
           String orderByParam = orderByParams[index];
           OrderType orderType = orderTypes[index];
-          orderContxt.append(orderByParam).append(" ").append(orderType == OrderType.ASC?"asc":"desc");
+          orderContxt.append(TStringUtils.letterLowercase(simpleClassName)).append(".").append(orderByParam).append(" ").append(orderType == OrderType.ASC?"asc":"desc");
         }
-        code.append(orderContxt).append(System.lineSeparator());
+        code.append(orderContxt).append(" \" ");
       }
-      code.append(System.lineSeparator());
+      code.append(")").append(System.lineSeparator());
+      
+      //构造方法定义
+      importMapping.put("java.util.List", "java.util.List");
+      // TODO 对于返回值的判定还可以优化
+      code.append("  public List<" + simpleClassName + "> " + methodName + "(" + paramsContexts + ");");
+      code.append(System.lineSeparator()).append(System.lineSeparator());
     }
-    
     return code;
   }
   
@@ -428,7 +440,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       String propertyDesc = persistentProperty.getPropertyDesc();
       String buildParam = TStringUtils.letterLowercase(simpleClassName) + "_" + param;
       // 构造说明信息
-      descParamsContexts.append("  * @param " + buildParam + " " + propertyDesc + System.lineSeparator());
+      descParamsContexts.append("   * @param " + buildParam + " " + propertyDesc + System.lineSeparator());
       // 构造查询语句中的查询条件
       if(conditionParamsContexts.length() != 0) {
         conditionParamsContexts.append(" and ");
@@ -439,11 +451,10 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
         paramsContexts.append(" , ");
       }
       importMapping.put(propertyClass, propertyClass);
-      paramsContexts.append("@Param(\"" + buildParam + "\") " + propertyClass + " " + buildParam);
+      paramsContexts.append("@Param(\"" + buildParam + "\") " + TStringUtils.getSimpleClassName(propertyClass) + " " + buildParam);
     } 
     // 2、 ===================
-    else if(paramArrayItems.length == itemIndex + 1) {
-      String simpleClassName = currentPrsistentClass.getSimpleClassName();
+    else if(paramArrayItems.length != 1 && paramArrayItems.length == itemIndex + 1) {
       String className = currentPrsistentClass.getClassName();
       String param = paramArrayItems[itemIndex];
       String nextParamAlis = currentParamAlis + "_" + param;
@@ -454,21 +465,21 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       }
       String propertyClass = persistentProperty.getPropertyClass();
       String propertyDesc = persistentProperty.getPropertyDesc();
-      // 构造left join left信息
-      leftJoinContexts.append(" + \" left join fetch " + currentParamAlis + "." + param + " " + nextParamAlis + " \" " + System.lineSeparator());
+//      // 构造left join left信息
+//      leftJoinContexts.append(" + \" left join fetch " + currentParamAlis + "." + param + " " + nextParamAlis + " \" " + System.lineSeparator());
       // 构造说明信息
-      descParamsContexts.append("  * @param " + nextParamAlis + " " + propertyDesc + System.lineSeparator());
+      descParamsContexts.append("   * @param " + nextParamAlis + " " + propertyDesc + System.lineSeparator());
       // 构造查询语句中的查询条件
       if(conditionParamsContexts.length() != 0) {
         conditionParamsContexts.append(" and ");
       }
-      conditionParamsContexts.append(TStringUtils.letterLowercase(simpleClassName) + "." + param + "=:" + nextParamAlis);
+      conditionParamsContexts.append(currentParamAlis + "." + param + "=:" + nextParamAlis);
       // 构造方法定义中的传参部分
       if(paramsContexts.length() != 0) {
         paramsContexts.append(" , ");
       }
       importMapping.put(propertyClass, propertyClass);
-      paramsContexts.append("@Param(\"" + nextParamAlis + "\") " + propertyClass + " " + nextParamAlis);
+      paramsContexts.append("@Param(\"" + nextParamAlis + "\") " + TStringUtils.getSimpleClassName(propertyClass) + " " + nextParamAlis);
     }
     // 3、============其它情况下说明关联关系还没有遍历完，需要继续遍历并记录left join fetch的关系
     else {
@@ -489,7 +500,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       }
       String nextParamAlis = currentParamAlis + "_" +  propertyName;
       // 构造left join left信息
-      leftJoinContexts.append(" + \" left join fetch " + currentParamAlis + "." + propertyName + " " + nextParamAlis + " \" " + System.lineSeparator());
+      leftJoinContexts.append("      + \" left join fetch " + currentParamAlis + "." + propertyName + " " + nextParamAlis + " \" " + System.lineSeparator());
       this.foundRelationParams(rootPrsistentClass, nextPersistentClass, paramArrayItems, itemIndex+1, persistentClassService, persistentPropertyService, persistentRelationService, importMapping, descParamsContexts, leftJoinContexts, conditionParamsContexts, paramsContexts, nextParamAlis);
     }
   }
@@ -501,7 +512,6 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
    * @return
    */
   private StringBuffer buildCustomUpdateMethods(PersistentClass persistentClass , Map<String, String> importMapping , PersistentPropertyService persistentPropertyService , PersistentRelationService persistentRelationService) {
-    String targetSimpleClassName = persistentClass.getSimpleClassName();
     String repositoryTable = persistentClass.getRepositoryTable();
     String targetClassName = persistentClass.getClassName();
     StringBuffer codeView = new StringBuffer();
@@ -510,9 +520,7 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       return codeView;
     }
     
-    /*
-     * TODO 伪代码步骤还没有写
-     * 
+    /* 
      * 方法的构造模板类似：=====
      * 
      * 修改用户已经设置的单位信息
@@ -523,10 +531,10 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
      * public void modifyUnit(@Param("userId") String userId ,@Param("unitId") String unitId);
      * */
     UPDATEITEM:for (PersistentUpdateMethod updateMethodItem : persistentUpdateMethods) {
-      // TODO 基础验证要做
       String description = updateMethodItem.getDescription();
       String queryParams[] = updateMethodItem.getQueryParams();
       String updateParams[] = updateMethodItem.getUpdateParams();
+      String methodName = updateMethodItem.getMethodName();
       // TODO 还需要验证queryParams属性、updateParams属性的正确性
       
       // ==== 形成参数说明信息、更新语句片段信息、更新条件片段信息
@@ -534,14 +542,12 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       StringBuffer updateContexts = new StringBuffer();
       StringBuffer conditionContexts = new StringBuffer();
       StringBuffer paramContexts = new StringBuffer();
-      StringBuffer methodName = new StringBuffer("update");
       // 首先基于更新参数，构建说明信息、更新语句片段信息、更新条件片段信息
       for(int index = 0 ; index < updateParams.length ; index++) {
         String updateParam = updateParams[index];
         if(index != 0) {
           updateContexts.append(",");
           paramContexts.append(",");
-          methodName.append("And");
         }
         // 如果是关联信息，则要使用关联模型上的主键信息
         PersistentProperty persistentProperty = persistentPropertyService.findByPropertyName(targetClassName, updateParam);
@@ -552,12 +558,12 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
           }
           String propertyDbName = persistentProperty.getPropertyDbName();
           String propertyClass = persistentProperty.getPropertyClass();
-          importMapping.put(propertyClass, propertyClass);
           String propertyDesc = persistentProperty.getPropertyDesc();
-          descParamContexts.append("   * @param " + updateParam + " " + propertyDesc + System.lineSeparator());
-          updateContexts.append(propertyDbName + "=:" + updateParam);
-          paramContexts.append(propertyClass + " " + updateParam);
-          methodName.append(TStringUtils.letterUppercase(updateParam));
+          descParamContexts.append("   * @param _" + updateParam + " " + propertyDesc + System.lineSeparator());
+          updateContexts.append(propertyDbName + "=:_" + updateParam);
+          importMapping.put(propertyClass, propertyClass);
+          importMapping.put("org.springframework.data.repository.query.Param", "org.springframework.data.repository.query.Param");
+          paramContexts.append("@Param(\"_" + updateParam + "\")" + TStringUtils.getSimpleClassName(propertyClass) + " _" + updateParam);
         } 
         // 否则就是从关联字段中取出
         else {
@@ -585,27 +591,30 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
             continue UPDATEITEM;
           }
           propertyClass = relationPrimaryKey.getPropertyClass();
-          importMapping.put(propertyClass, propertyClass);
           
-          descParamContexts.append("   * @param " + updateParam + " " + propertyDesc + System.lineSeparator());
-          updateContexts.append(propertyDbName + "=:" + updateParam);
-          paramContexts.append(propertyClass + " " + updateParam);
+          descParamContexts.append("   * @param _" + updateParam + " " + propertyDesc + System.lineSeparator());
+          updateContexts.append(propertyDbName + "=:_" + updateParam);
+          importMapping.put(propertyClass, propertyClass);
+          importMapping.put("org.springframework.data.repository.query.Param", "org.springframework.data.repository.query.Param");
+          paramContexts.append("@Param(\"_" + updateParam + "\")" + TStringUtils.getSimpleClassName(propertyClass) + " _" + updateParam);
         }
       }
       // 然后基于查询信息，构建说明信息、更新语句片段信息、更新条件片段信息
       for (int index = 0 ; index < queryParams.length ; index++) {
         String queryParamItem = queryParams[index];
         if(index != 0) {
-          conditionContexts.append(",");
+          conditionContexts.append(" AND ");
         }
-        PersistentProperty persistentProperty = persistentPropertyService.findByPropertyName(targetSimpleClassName, queryParamItem);
+        paramContexts.append(",");
+        PersistentProperty persistentProperty = persistentPropertyService.findByPropertyName(targetClassName, queryParamItem);
         if(persistentProperty != null) {
           String propertyDbName = persistentProperty.getPropertyDbName();
           String propertyDesc = persistentProperty.getPropertyDesc();
           String propertyClass = persistentProperty.getPropertyClass();
           descParamContexts.append("   * @param " + queryParamItem + " " + propertyDesc + System.lineSeparator());
           conditionContexts.append(propertyDbName + "=:" + queryParamItem);
-          paramContexts.append(propertyClass + " " + queryParamItem);
+          importMapping.put(propertyClass, propertyClass);
+          paramContexts.append("@Param(\"" + queryParamItem + "\")" + TStringUtils.getSimpleClassName(propertyClass) + " " + queryParamItem);
         } else {
           // 如果条件成立说明在该类模型的普通属性和关联属性中都没有找到这个属性，或者说明这个关联属性的关联类型错误，不能进行属性更新
           PersistentRelation persistentRelation = persistentRelationService.findByPropertyName(targetClassName, queryParamItem);
@@ -630,7 +639,8 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
           propertyClass = relationPrimaryKey.getPropertyClass();
           descParamContexts.append("   * @param " + queryParamItem + " " + propertyDesc + System.lineSeparator());
           conditionContexts.append(propertyDbName + "=:" + queryParamItem);
-          paramContexts.append(propertyClass + " " + queryParamItem);
+          importMapping.put(propertyClass, propertyClass);
+          paramContexts.append("@Param(\"" + queryParamItem + "\")" + TStringUtils.getSimpleClassName(propertyClass) + " " + queryParamItem + " ");
         }
       }
       
@@ -640,11 +650,11 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       codeView.append(descParamContexts);
       codeView.append("   */" + System.lineSeparator());
       // 然后是更新语句的定义
-      codeView.append(" @Modifying" + System.lineSeparator());
+      codeView.append("  @Modifying" + System.lineSeparator());
       // 然后是查询语句
-      codeView.append(" @Query(value=\"update " + repositoryTable + " set " + updateContexts + " where " + conditionContexts + "\" , nativeQuery=true)" + System.lineSeparator());
+      codeView.append("  @Query(value=\"update " + repositoryTable + " set " + updateContexts + " where " + conditionContexts + "\" , nativeQuery=true)" + System.lineSeparator());
       // 然后是方法定义
-      codeView.append("public void " + methodName + "(" + paramContexts + ");" + System.lineSeparator());
+      codeView.append("  public void " + methodName + "(" + paramContexts + ");" + System.lineSeparator());
       codeView.append(System.lineSeparator());
     }
     
@@ -697,15 +707,16 @@ public class HibernateJpaRepositoryGenerateHandler extends AbstractJavaFileGener
       codeView.append("   * @param " + paramName + " " + propertyDesc + System.lineSeparator());
       codeView.append("   */" + System.lineSeparator());
       importMapping.put("org.springframework.data.jpa.repository.Query", "org.springframework.data.jpa.repository.Query");
+      importMapping.put("org.springframework.data.repository.query.Param", "org.springframework.data.repository.query.Param");
       importMapping.put(primaryProperty.getPropertyClass(), primaryProperty.getPropertyClass());
       importMapping.put("java.util.List", "java.util.List");
       // 查询设定
-      codeView.append("  @Query(\"from " + targetSimpleClassName + " " + TStringUtils.letterLowercase(targetSimpleClassName) + " \" "
-          + " + \"left join fetch " + TStringUtils.letterLowercase(targetSimpleClassName) + "." + property + " " + property + " \" "
-          + " + \"where " + property + "." + primaryProperty.getPropertyName() + " = :" + paramName + "\")"  + System.lineSeparator());
+      codeView.append("  @Query(\"from " + targetSimpleClassName + " " + TStringUtils.letterLowercase(targetSimpleClassName) + " \" " + System.lineSeparator()
+          + "  + \" left join fetch " + TStringUtils.letterLowercase(targetSimpleClassName) + "." + property + " " + property + " \" " + System.lineSeparator()
+          + "  + \" where " + property + "." + primaryProperty.getPropertyName() + " = :" + paramName + "\")"  + System.lineSeparator());
       // 查询方法名设定
       codeView.append("  public List<" + targetSimpleClassName + "> findBy" + TStringUtils.letterUppercase(property) + 
-        "(@Param(\"" + paramName + "\") " + primaryProperty.getPropertyClass() + " " + paramName + ");" + System.lineSeparator());
+        "(@Param(\"" + paramName + "\") " + TStringUtils.getSimpleClassName(primaryProperty.getPropertyClass()) + " " + paramName + ");" + System.lineSeparator());
       codeView.append("  " + System.lineSeparator());
       
       // TODO 方法名是否需要映射，以免后续重复

@@ -6,12 +6,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.vanda.platform.saturn.core.context.repository.AbstractRepositoryFactory;
-import com.vanda.platform.saturn.core.context.repository.PersistentClassRepository;
-import com.vanda.platform.saturn.core.context.repository.PersistentPropertyRepository;
-import com.vanda.platform.saturn.core.context.repository.PersistentQueryMethodRepository;
-import com.vanda.platform.saturn.core.context.repository.PersistentRelationRepository;
-import com.vanda.platform.saturn.core.context.repository.PersistentUpdateMethodRepository;
 import com.vanda.platform.saturn.core.context.service.PersistentClassService;
 import com.vanda.platform.saturn.core.context.service.PersistentPropertyService;
 import com.vanda.platform.saturn.core.context.service.PersistentQueryMethodService;
@@ -19,12 +13,6 @@ import com.vanda.platform.saturn.core.context.service.PersistentRelationService;
 import com.vanda.platform.saturn.core.context.service.PersistentServiceFactory;
 import com.vanda.platform.saturn.core.context.service.PersistentUpdateMethodService;
 import com.vanda.platform.saturn.core.model.PersistentClass;
-import com.vanda.platform.saturn.core.test.context.repository.ehcache.TestEhcache;
-
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.config.CacheConfiguration;
-import net.sf.ehcache.config.Configuration;
 
 /**
  * 该工厂专门生产基于普通内存对象的存储层操作对象<br>

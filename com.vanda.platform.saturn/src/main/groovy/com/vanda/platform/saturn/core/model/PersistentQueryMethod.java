@@ -26,7 +26,10 @@ public class PersistentQueryMethod {
    * 注意这里设置的属性名，必须是简单类型。
    */
   private String[] orderByParams;
-  
+  /**
+   * 自定义查询的方法
+   */
+  private String methodName;
   /**
    * 如果指定的排序的依赖属性，就必须指定排序的方式，包括两种ASC和DESC
    */
@@ -34,6 +37,12 @@ public class PersistentQueryMethod {
   
   public String[] getParams() {
     return params;
+  }
+  public String getMethodName() {
+    return methodName;
+  }
+  public void setMethodName(String methodName) {
+    this.methodName = methodName;
   }
   public void setParams(String[] params) {
     this.params = params;

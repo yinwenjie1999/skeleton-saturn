@@ -20,7 +20,8 @@ public class SimplePersistentPropertyService implements PersistentPropertyServic
   
   private Map<String, PersistentClass> persistentClassMapping;
   
-  SimplePersistentPropertyService(Map<String, PersistentClass> persistentClassMapping) {
+  // TODO 这里的public只是为了跑单元测试，正式发布要去掉
+  public SimplePersistentPropertyService(Map<String, PersistentClass> persistentClassMapping) {
     this.persistentClassMapping = persistentClassMapping;
   }
 

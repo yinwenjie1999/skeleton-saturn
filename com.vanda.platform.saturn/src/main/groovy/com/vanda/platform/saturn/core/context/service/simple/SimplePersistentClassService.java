@@ -19,7 +19,8 @@ public class SimplePersistentClassService implements PersistentClassService {
 
   private Map<String, PersistentClass> persistentClassMapping;
   
-  SimplePersistentClassService(Map<String, PersistentClass> persistentClassMapping) {
+  // TODO 这里的public只是为了跑单元测试，正式发布要去掉
+  public SimplePersistentClassService(Map<String, PersistentClass> persistentClassMapping) {
     this.persistentClassMapping = persistentClassMapping;
   }
   

@@ -3,6 +3,7 @@ package com.vanda.platform.saturn.core.context.service.simple;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
@@ -18,9 +19,10 @@ import com.vanda.platform.saturn.core.model.PersistentUpdateMethod;
 public class SimpleUpdateMethodService implements PersistentUpdateMethodService {
   private Map<String, PersistentClass> persistentClassMapping;
   
-  SimpleUpdateMethodService(Map<String, PersistentClass> persistentClassMapping) {
+  // TODO 这里的public只是为了跑单元测试，正式发布要去掉
+  public SimpleUpdateMethodService(Map<String, PersistentClass> persistentClassMapping) {
     this.persistentClassMapping = persistentClassMapping;
-  }
+  } 
   
   /* (non-Javadoc)
    * @see com.vanda.platform.saturn.core.context.service.PersistentUpdateMethodService#save(com.vanda.platform.saturn.core.model.PersistentUpdateMethod)
@@ -38,6 +40,8 @@ public class SimpleUpdateMethodService implements PersistentUpdateMethodService 
     Validate.isTrue(updateParams != null && updateParams.length > 0 , "请至少指定一个更新参数信息!!");
     String[] queryParams = updateMethod.getQueryParams();
     Validate.isTrue(queryParams != null && queryParams.length > 0 , "请至少指定一个条件参数信息!!");
+    String methodName = updateMethod.getMethodName();
+    Validate.isTrue(StringUtils.startsWith(methodName, "update") , "自定义更新方法必须以update关键字开始!!");
     
     // 确认这个方法是否已经存在于集合中
     List<PersistentUpdateMethod> updateMethods = persistentClass.getUpdateMethods();
@@ -45,15 +49,11 @@ public class SimpleUpdateMethodService implements PersistentUpdateMethodService 
       updateMethods = new LinkedList<>();
       persistentClass.setUpdateMethods(updateMethods);
     }
-    int index = 0;
-    boolean found = false;
-    for (; index < updateMethods.size() ; index++) {
-      PersistentUpdateMethod updateMethodItem = updateMethods.get(index);
-      // 只有所有的参数都一致，才认为是重复的方法
-      // TODO 未完成
-    }
-    if(found) {
-      updateMethods.set(index, updateMethod);
+    // 方法名一致时就认为是重复的方法了
+    List<String> currentMethodNames = updateMethods.stream().map(PersistentUpdateMethod::getMethodName).collect(Collectors.toList());
+    int foundIndex = currentMethodNames.indexOf(methodName);
+    if(foundIndex != -1) {
+      updateMethods.set(foundIndex, updateMethod);
     } else {
       updateMethods.add(updateMethod);
     }

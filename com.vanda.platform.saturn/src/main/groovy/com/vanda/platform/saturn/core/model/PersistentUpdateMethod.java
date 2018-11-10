@@ -20,6 +20,10 @@ public class PersistentUpdateMethod {
    */
   private String[] updateParams;
   /**
+   * 自定义更新的方法
+   */
+  private String methodName;
+  /**
    * 更新方法的描述信息
    */
   private String description;
@@ -29,6 +33,12 @@ public class PersistentUpdateMethod {
   }
   public void setDescription(String description) {
     this.description = description;
+  }
+  public String getMethodName() {
+    return methodName;
+  }
+  public void setMethodName(String methodName) {
+    this.methodName = methodName;
   }
   public String[] getQueryParams() {
     return queryParams;

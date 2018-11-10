@@ -27,11 +27,11 @@ import com.vanda.platform.saturn.core.engine.annotation.SaturnQueryMethod.QueryT
 @Table(name = "b_user")
 @BuildCustomRepository
 @BuildQueryMethods(methods={
-  @SaturnQueryMethod(params={"account","useStatus"} , description="按照用户登录名和用户状态进行用户基本信息查询" , queryType=QueryType.EQUAL),
-  @SaturnQueryMethod(params={"useStatus"} , description="按照用户状态，查询符合状态的所有信息" , queryType=QueryType.EQUAL , orderByParams={"createTime"} , orderType={OrderType.DESC})
+  @SaturnQueryMethod(methodName="queryByRolesAndUseStatus", params={"roles.name","useStatus"} , description="按照用户登录名和用户状态进行用户基本信息查询" , queryType=QueryType.EQUAL),
+  @SaturnQueryMethod(methodName="queryByUseStatus" , params={"useStatus"} , description="按照用户状态，查询符合状态的所有信息" , queryType=QueryType.EQUAL , orderByParams={"createTime"} , orderType={OrderType.DESC})
 })
 @BuildUpdateMethods(methods={
-  @SaturnUpdateMethod(queryParams={"account" , "useStatus"} , updateParams={"id"}, description="更新指定用户的用户状态")
+  @SaturnUpdateMethod(methodName="updateByAccountAndUseStatus" , queryParams={"account" , "useStatus"} , updateParams={"useStatus"}, description="更新指定用户的用户状态")
 })
 public class UserEntity extends UuidEntity {
   /**
@@ -78,7 +78,7 @@ public class UserEntity extends UuidEntity {
    * 0和其它值：表示不可用
    */
   @Column(name = "useStatus", nullable = false)
-  @SaturnColumn(description="用户状态")
+  @SaturnColumn(description="用户状态" , updatable=true)
   private Integer useStatus = 1;
 
   /** 角色和人员相关的. **/

@@ -225,6 +225,9 @@ public abstract class JavassistAnalysis {
     Validate.notBlank(description , "自定义修改方法中的描述信息必须指定[" + className + ":UpdateMethod]!");
     persistentUpdateMethod.setDescription(description);
     persistentUpdateMethod.setPersistentClassName(className);
+    String methodName = saturnUpdateMethod.methodName();
+    Validate.isTrue(StringUtils.startsWithAny(methodName, "update") , "自定义更新方法只能以update关键字开始!!");
+    persistentUpdateMethod.setMethodName(methodName);
     
     // 然后时对查询条件中的设定进行校验和处理
     // 不可能没有查询条件，因为没有查询条件就是全范围数据更新，这肯定是错误的
@@ -251,7 +254,7 @@ public abstract class JavassistAnalysis {
       PersistentProperty persistentProperty = persistentPropertyMapping.get(updateFieldItem);
       Validate.notNull(persistentProperty , "未发现更新字段配置中指定的属性" + updateFieldItem + "，请检查!");
     }
-    persistentUpdateMethod.setQueryParams(updateFields);
+    persistentUpdateMethod.setUpdateParams(updateFields);
     
     return persistentUpdateMethod;
   }
@@ -328,6 +331,9 @@ public abstract class JavassistAnalysis {
     String description = queryMethodAnnotation.description();
     Validate.notBlank(description , "自定义查询方法中的描述信息必须指定[" + className + ":QueryMethod]!");
     persistentQueryMethod.setDescription(description);
+    String methodName = queryMethodAnnotation.methodName();
+    Validate.isTrue(StringUtils.startsWithAny(methodName, "query","find") , "自定义查询方法只能以query或者find开始!!");
+    persistentQueryMethod.setMethodName(methodName);
     
     // 对查询条件属性进行验证，由于自定义查询支持多级属性，所以这里要对属性嵌套进行验证
     String params[] = queryMethodAnnotation.params();
